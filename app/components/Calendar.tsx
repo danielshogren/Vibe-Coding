@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 
 const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTH_NAMES = [
@@ -12,12 +11,10 @@ const MONTH_NAMES = [
 interface CalendarProps {
   itemCountsByDate: Record<string, number>;
   selectedDate: string | null;
+  onDateSelect: (date: string) => void;
 }
 
-export function Calendar({ itemCountsByDate, selectedDate }: CalendarProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
+export function Calendar({ itemCountsByDate, selectedDate, onDateSelect }: CalendarProps) {
   const today = new Date();
   const todayStr = [
     today.getFullYear(),
@@ -25,11 +22,10 @@ export function Calendar({ itemCountsByDate, selectedDate }: CalendarProps) {
     String(today.getDate()).padStart(2, "0"),
   ].join("-");
 
-  const initial = selectedDate
-    ? { year: Number(selectedDate.slice(0, 4)), month: Number(selectedDate.slice(5, 7)) - 1 }
-    : { year: today.getFullYear(), month: today.getMonth() };
-
-  const [viewDate, setViewDate] = useState(initial);
+  const [viewDate, setViewDate] = useState({
+    year: today.getFullYear(),
+    month: today.getMonth(),
+  });
 
   const { year, month } = viewDate;
   const firstDayOfWeek = new Date(year, month, 1).getDay();
@@ -42,18 +38,6 @@ export function Calendar({ itemCountsByDate, selectedDate }: CalendarProps) {
 
   function dateStr(day: number) {
     return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-  }
-
-  function handleDateClick(day: number) {
-    const clicked = dateStr(day);
-    const params = new URLSearchParams(searchParams.toString());
-    if (clicked === selectedDate) {
-      params.delete("date");
-    } else {
-      params.set("date", clicked);
-    }
-    const qs = params.toString();
-    router.push(qs ? `/?${qs}` : "/");
   }
 
   function prevMonth() {
@@ -73,7 +57,7 @@ export function Calendar({ itemCountsByDate, selectedDate }: CalendarProps) {
   }
 
   return (
-    <div className="mt-8 bg-white rounded-lg border border-gray-200 shadow-sm p-4">
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <button
@@ -114,47 +98,36 @@ export function Calendar({ itemCountsByDate, selectedDate }: CalendarProps) {
           const isSelected = ds === selectedDate;
           const hasItems = (itemCountsByDate[ds] ?? 0) > 0;
 
-          const cls = [
-            "relative flex flex-col items-center justify-center py-1 rounded-md cursor-pointer",
-            isSelected && "bg-blue-600 text-white",
-            !isSelected && isToday && "font-bold ring-2 ring-blue-500",
-            !isSelected && !isToday && "hover:bg-gray-100 text-gray-800",
+          const baseCls = [
+            "relative flex flex-col items-center justify-center py-1 rounded-md",
+            isToday && "font-bold ring-2 ring-blue-500",
+            isSelected && "bg-blue-100",
+            !isToday && !isSelected && "text-gray-800",
           ]
             .filter(Boolean)
             .join(" ");
 
+          if (hasItems) {
+            return (
+              <button
+                key={day}
+                type="button"
+                onClick={() => onDateSelect(ds)}
+                className={`${baseCls} cursor-pointer hover:bg-blue-50`}
+              >
+                {day}
+                <span className="block w-1.5 h-1.5 rounded-full mt-0.5 bg-blue-500" />
+              </button>
+            );
+          }
+
           return (
-            <button key={day} className={cls} onClick={() => handleDateClick(day)}>
+            <div key={day} className={baseCls}>
               {day}
-              {hasItems && (
-                <span
-                  className={[
-                    "block w-1.5 h-1.5 rounded-full mt-0.5",
-                    isSelected ? "bg-white" : "bg-blue-500",
-                  ].join(" ")}
-                />
-              )}
-            </button>
+            </div>
           );
         })}
       </div>
-
-      {/* Clear filter */}
-      {selectedDate && (
-        <div className="mt-3 text-center">
-          <button
-            onClick={() => {
-              const params = new URLSearchParams(searchParams.toString());
-              params.delete("date");
-              const qs = params.toString();
-              router.push(qs ? `/?${qs}` : "/");
-            }}
-            className="text-sm text-blue-600 hover:underline"
-          >
-            Clear filter
-          </button>
-        </div>
-      )}
     </div>
   );
 }

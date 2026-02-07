@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { addProjectItem } from "@/lib/store";
+import { addProjectItem, updateProjectItemStatus as storeUpdateStatus } from "@/lib/store";
 import type { ProjectItemStatus } from "@/lib/types";
 
 /**
@@ -21,5 +21,13 @@ export async function createProjectItem(formData: FormData) {
     date: date || new Date().toISOString().slice(0, 10),
   });
 
+  revalidatePath("/");
+}
+
+/**
+ * Server action: updates the status of an existing project item.
+ */
+export async function updateProjectItemStatus(id: string, status: ProjectItemStatus) {
+  storeUpdateStatus(id, status);
   revalidatePath("/");
 }

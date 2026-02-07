@@ -43,7 +43,7 @@ export function ProjectItemForm() {
 
       <div className="flex flex-col gap-1">
         <label htmlFor="date" className="text-sm font-medium text-gray-700">
-          Date
+          Due Date
         </label>
         <input
           id="date"

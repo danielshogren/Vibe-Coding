@@ -29,6 +29,20 @@ export function addProjectItem(input: Omit<ProjectItem, "id">): ProjectItem {
  * Return all project items, sorted by date ascending, then by title.
  * Used by the list view to group and display items.
  */
+/**
+ * Update the status of an existing project item.
+ * Returns the updated item, or null if not found.
+ */
+export function updateProjectItemStatus(
+  id: string,
+  status: ProjectItem["status"]
+): ProjectItem | null {
+  const item = items.find((i) => i.id === id);
+  if (!item) return null;
+  item.status = status;
+  return item;
+}
+
 export function getAllProjectItems(): ProjectItem[] {
   return [...items].sort((a, b) => {
     const dateCompare = a.date.localeCompare(b.date);

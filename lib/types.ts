@@ -9,7 +9,7 @@ export type ProjectItemStatus = "backlog" | "in_progress" | "stuck" | "done";
  * id: unique identifier (generated when created)
  * title: user-facing name
  * status: current workflow state
- * date: YYYY-MM-DD string for grouping and display
+ * date: YYYY-MM-DD due date string for grouping and display
  */
 export interface ProjectItem {
   id: string;
