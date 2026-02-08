@@ -1,6 +1,7 @@
 import { getActiveProjectItems, getArchivedProjectItems } from "@/lib/store";
 import { ProjectItemForm } from "@/app/components/ProjectItemForm";
 import { ProjectCalendarView } from "@/app/components/ProjectCalendarView";
+import { SettingsButton } from "@/app/components/SettingsButton";
 
 /**
  * Single-page MVP: form at top, list of project items grouped by date below,
@@ -20,7 +21,10 @@ export default async function Home() {
     <main className="max-w-5xl mx-auto">
       {/* Sticky header: frosted glass + shadow */}
       <div className="sticky top-0 z-10 bg-gray-50/80 backdrop-blur-md shadow-md px-6 pt-6 pb-4">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Project Tracker</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-bold text-gray-900">Project Tracker</h1>
+          <SettingsButton />
+        </div>
         <ProjectItemForm />
       </div>
 
