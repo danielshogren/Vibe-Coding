@@ -4,9 +4,10 @@ import { DeleteButton } from "./DeleteButton";
 import { EditableField } from "./EditableField";
 
 /**
- * Groups project items by due date and renders a simple list.
- * Each group shows the due date (YYYY-MM-DD) as a heading, then each item's title + status.
- * When selectedDate matches a group's date, that group is highlighted in pale blue.
+ * Renders a flat list of project item cards sorted by date.
+ * Each card shows the title in the header bar with status/delete,
+ * and the due date + notes in the body.
+ * When selectedDate matches an item's date, that card is highlighted in pale blue.
  */
 export function ProjectItemList({
   items,
@@ -15,17 +16,7 @@ export function ProjectItemList({
   items: ProjectItem[];
   selectedDate?: string | null;
 }) {
-  // Group by date (items are already sorted by date from the store)
-  const byDate = items.reduce<Record<string, ProjectItem[]>>((acc, item) => {
-    const d = item.date;
-    if (!acc[d]) acc[d] = [];
-    acc[d].push(item);
-    return acc;
-  }, {});
-
-  const dates = Object.keys(byDate).sort();
-
-  if (dates.length === 0) {
+  if (items.length === 0) {
     return (
       <p className="text-gray-500 mt-4 p-4">No project items yet. Add one above.</p>
     );
@@ -33,57 +24,52 @@ export function ProjectItemList({
 
   return (
     <div className="space-y-6">
-      {dates.map((date) => {
-        const isHighlighted = selectedDate === date;
+      {items.map((item) => {
+        const isHighlighted = selectedDate === item.date;
 
         return (
-          <section key={date} className="bg-white rounded-lg border border-gray-200 shadow-sm">
-            <h2
+          <section key={item.id} className="bg-white rounded-lg border border-gray-200 shadow-sm">
+            <div
               className={
                 isHighlighted
-                  ? "px-4 py-2 bg-blue-100 text-blue-900 font-semibold border-b border-gray-200"
-                  : "px-4 py-2 bg-gray-100 text-gray-700 font-semibold border-b border-gray-200"
+                  ? "px-4 py-2 bg-blue-100 border-b border-gray-200 flex items-center justify-between gap-4 rounded-t-lg"
+                  : "px-4 py-2 bg-gray-100 border-b border-gray-200 flex items-center justify-between gap-4 rounded-t-lg"
               }
             >
-              {date}
-            </h2>
-            <ul className="divide-y divide-gray-100">
-              {byDate[date].map((item) => (
-                <li
-                  key={item.id}
-                  className={
-                    isHighlighted
-                      ? "px-4 py-3 flex items-center justify-between gap-4 bg-blue-50 transition-colors duration-200"
-                      : "px-4 py-3 flex items-center justify-between gap-4 transition-colors duration-200"
-                  }
-                >
-                  <div className="flex items-baseline gap-2 min-w-0">
-                    <EditableField
-                      itemId={item.id}
-                      field="title"
-                      value={item.title}
-                      allowEmpty={false}
-                      isHighlighted={isHighlighted}
-                      className={isHighlighted ? "font-medium text-blue-900" : "font-medium text-gray-900"}
-                    />
-                    <EditableField
-                      itemId={item.id}
-                      field="notes"
-                      value={item.notes}
-                      allowEmpty={true}
-                      isHighlighted={isHighlighted}
-                      placeholder="Add notes..."
-                      className={isHighlighted ? "text-sm text-blue-400" : "text-sm text-gray-400"}
-                      emptyClassName={isHighlighted ? "text-sm text-blue-300 italic" : "text-sm text-gray-300 italic"}
-                    />
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <StatusBadge itemId={item.id} currentStatus={item.status} />
-                    <DeleteButton itemId={item.id} />
-                  </div>
-                </li>
-              ))}
-            </ul>
+              <EditableField
+                itemId={item.id}
+                field="title"
+                value={item.title}
+                allowEmpty={false}
+                isHighlighted={isHighlighted}
+                className={isHighlighted ? "font-semibold text-blue-900" : "font-semibold text-gray-700"}
+              />
+              <div className="flex items-center gap-1 shrink-0">
+                <StatusBadge itemId={item.id} currentStatus={item.status} />
+                <DeleteButton itemId={item.id} />
+              </div>
+            </div>
+            <div
+              className={
+                isHighlighted
+                  ? "px-4 py-3 flex items-center gap-4 bg-blue-50 transition-colors duration-200"
+                  : "px-4 py-3 flex items-center gap-4 transition-colors duration-200"
+              }
+            >
+              <span className={isHighlighted ? "text-sm text-blue-700 shrink-0" : "text-sm text-gray-500 shrink-0"}>
+                Due: {item.date}
+              </span>
+              <EditableField
+                itemId={item.id}
+                field="notes"
+                value={item.notes}
+                allowEmpty={true}
+                isHighlighted={isHighlighted}
+                placeholder="Add notes..."
+                className={isHighlighted ? "text-sm text-blue-400" : "text-sm text-gray-400"}
+                emptyClassName={isHighlighted ? "text-sm text-blue-300 italic" : "text-sm text-gray-300 italic"}
+              />
+            </div>
           </section>
         );
       })}
