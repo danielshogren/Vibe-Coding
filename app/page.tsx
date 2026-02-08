@@ -1,17 +1,19 @@
-import { getAllProjectItems } from "@/lib/store";
+import { getActiveProjectItems, getArchivedProjectItems } from "@/lib/store";
 import { ProjectItemForm } from "@/app/components/ProjectItemForm";
 import { ProjectCalendarView } from "@/app/components/ProjectCalendarView";
+import { ArchivedSection } from "@/app/components/ArchivedSection";
 
 /**
  * Single-page MVP: form at top, list of project items grouped by date below,
  * and a monthly calendar that highlights matching items when a date is clicked.
  */
 export default async function Home() {
-  const allItems = getAllProjectItems();
+  const activeItems = getActiveProjectItems();
+  const archivedItems = getArchivedProjectItems();
 
-  // Build counts map for calendar dots
+  // Build counts map for calendar dots (active items only)
   const itemCountsByDate: Record<string, number> = {};
-  for (const item of allItems) {
+  for (const item of activeItems) {
     itemCountsByDate[item.date] = (itemCountsByDate[item.date] ?? 0) + 1;
   }
 
@@ -25,7 +27,8 @@ export default async function Home() {
 
       {/* Scrollable content below */}
       <div className="px-6 pb-6 pt-6">
-        <ProjectCalendarView items={allItems} itemCountsByDate={itemCountsByDate} />
+        <ProjectCalendarView items={activeItems} itemCountsByDate={itemCountsByDate} />
+        <ArchivedSection items={archivedItems} />
       </div>
     </main>
   );

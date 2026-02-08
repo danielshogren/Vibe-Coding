@@ -16,10 +16,11 @@ function generateId(): string {
  * Add a new project item to the store.
  * Returns the created item (with id set).
  */
-export function addProjectItem(input: Omit<ProjectItem, "id">): ProjectItem {
+export function addProjectItem(input: Omit<ProjectItem, "id" | "archived">): ProjectItem {
   const item: ProjectItem = {
     ...input,
     id: generateId(),
+    archived: false,
   };
   items.push(item);
   return item;
@@ -75,4 +76,44 @@ export function getAllProjectItems(): ProjectItem[] {
     if (dateCompare !== 0) return dateCompare;
     return a.title.localeCompare(b.title, undefined, { numeric: true });
   });
+}
+
+/** Return only non-archived items, sorted by date then title. */
+export function getActiveProjectItems(): ProjectItem[] {
+  return items
+    .filter((i) => !i.archived)
+    .sort((a, b) => {
+      const dateCompare = a.date.localeCompare(b.date);
+      if (dateCompare !== 0) return dateCompare;
+      return a.title.localeCompare(b.title, undefined, { numeric: true });
+    });
+}
+
+/** Return only archived items, sorted by date then title. */
+export function getArchivedProjectItems(): ProjectItem[] {
+  return items
+    .filter((i) => i.archived)
+    .sort((a, b) => {
+      const dateCompare = a.date.localeCompare(b.date);
+      if (dateCompare !== 0) return dateCompare;
+      return a.title.localeCompare(b.title, undefined, { numeric: true });
+    });
+}
+
+/** Bulk archive items by setting archived = true. */
+export function archiveProjectItems(ids: string[]): void {
+  const idSet = new Set(ids);
+  for (const item of items) {
+    if (idSet.has(item.id)) {
+      item.archived = true;
+    }
+  }
+}
+
+/** Restore a single archived item by setting archived = false. */
+export function unarchiveProjectItem(id: string): void {
+  const item = items.find((i) => i.id === id);
+  if (item) {
+    item.archived = false;
+  }
 }

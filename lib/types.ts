@@ -17,4 +17,5 @@ export interface ProjectItem {
   notes: string;
   status: ProjectItemStatus;
   date: string;
+  archived: boolean;
 }
