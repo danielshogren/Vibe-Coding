@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { addProjectItem, updateProjectItemStatus as storeUpdateStatus, updateProjectItemField as storeUpdateField, deleteProjectItem as storeDeleteItem, archiveProjectItems as storeArchiveItems, unarchiveProjectItem as storeUnarchiveItem } from "@/lib/store";
+import { addProjectItem, updateProjectItemStatus as storeUpdateStatus, updateProjectItemField as storeUpdateField, deleteProjectItem as storeDeleteItem, deleteProjectItems as storeDeleteItems, archiveProjectItems as storeArchiveItems, unarchiveProjectItem as storeUnarchiveItem } from "@/lib/store";
 import type { ProjectItemStatus } from "@/lib/types";
 
 /**
@@ -51,6 +51,14 @@ export async function updateProjectItemField(
  */
 export async function deleteProjectItem(id: string) {
   storeDeleteItem(id);
+  revalidatePath("/");
+}
+
+/**
+ * Server action: permanently deletes multiple project items by their IDs.
+ */
+export async function deleteProjectItems(ids: string[]) {
+  storeDeleteItems(ids);
   revalidatePath("/");
 }
 

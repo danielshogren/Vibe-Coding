@@ -110,6 +110,16 @@ export function archiveProjectItems(ids: string[]): void {
   }
 }
 
+/** Bulk delete items by removing them from the store. */
+export function deleteProjectItems(ids: string[]): void {
+  const idSet = new Set(ids);
+  for (let i = items.length - 1; i >= 0; i--) {
+    if (idSet.has(items[i].id)) {
+      items.splice(i, 1);
+    }
+  }
+}
+
 /** Restore a single archived item by setting archived = false. */
 export function unarchiveProjectItem(id: string): void {
   const item = items.find((i) => i.id === id);
