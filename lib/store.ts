@@ -43,10 +43,36 @@ export function updateProjectItemStatus(
   return item;
 }
 
+/**
+ * Update a single field (title or notes) of an existing project item.
+ * Returns the updated item, or null if not found.
+ */
+export function updateProjectItemField(
+  id: string,
+  field: "title" | "notes",
+  value: string
+): ProjectItem | null {
+  const item = items.find((i) => i.id === id);
+  if (!item) return null;
+  item[field] = value;
+  return item;
+}
+
+/**
+ * Delete a project item by ID.
+ * Returns true if the item was found and removed, false otherwise.
+ */
+export function deleteProjectItem(id: string): boolean {
+  const index = items.findIndex((i) => i.id === id);
+  if (index === -1) return false;
+  items.splice(index, 1);
+  return true;
+}
+
 export function getAllProjectItems(): ProjectItem[] {
   return [...items].sort((a, b) => {
     const dateCompare = a.date.localeCompare(b.date);
     if (dateCompare !== 0) return dateCompare;
-    return a.title.localeCompare(b.title);
+    return a.title.localeCompare(b.title, undefined, { numeric: true });
   });
 }

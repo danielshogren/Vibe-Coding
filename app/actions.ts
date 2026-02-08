@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { addProjectItem, updateProjectItemStatus as storeUpdateStatus } from "@/lib/store";
+import { addProjectItem, updateProjectItemStatus as storeUpdateStatus, updateProjectItemField as storeUpdateField, deleteProjectItem as storeDeleteItem } from "@/lib/store";
 import type { ProjectItemStatus } from "@/lib/types";
 
 /**
@@ -10,6 +10,7 @@ import type { ProjectItemStatus } from "@/lib/types";
  */
 export async function createProjectItem(formData: FormData) {
   const title = (formData.get("title") as string)?.trim();
+  const notes = (formData.get("notes") as string)?.trim() ?? "";
   const status = (formData.get("status") as ProjectItemStatus) ?? "backlog";
   const date = (formData.get("date") as string) ?? "";
 
@@ -17,6 +18,7 @@ export async function createProjectItem(formData: FormData) {
 
   addProjectItem({
     title,
+    notes,
     status,
     date: date || new Date().toISOString().slice(0, 10),
   });
@@ -29,5 +31,25 @@ export async function createProjectItem(formData: FormData) {
  */
 export async function updateProjectItemStatus(id: string, status: ProjectItemStatus) {
   storeUpdateStatus(id, status);
+  revalidatePath("/");
+}
+
+/**
+ * Server action: updates a single field (title or notes) of a project item.
+ */
+export async function updateProjectItemField(
+  id: string,
+  field: "title" | "notes",
+  value: string
+) {
+  storeUpdateField(id, field, value);
+  revalidatePath("/");
+}
+
+/**
+ * Server action: deletes an existing project item by ID.
+ */
+export async function deleteProjectItem(id: string) {
+  storeDeleteItem(id);
   revalidatePath("/");
 }

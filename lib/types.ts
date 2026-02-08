@@ -14,6 +14,7 @@ export type ProjectItemStatus = "backlog" | "in_progress" | "stuck" | "done";
 export interface ProjectItem {
   id: string;
   title: string;
+  notes: string;
   status: ProjectItemStatus;
   date: string;
 }

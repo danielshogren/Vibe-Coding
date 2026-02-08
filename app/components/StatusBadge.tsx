@@ -71,7 +71,7 @@ export function StatusBadge({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-1 z-10 w-36 bg-white rounded-lg border border-gray-200 shadow-lg overflow-hidden">
+        <div className="absolute right-0 top-full mt-1 z-50 w-36 bg-white rounded-lg border border-gray-200 shadow-lg overflow-hidden">
           {STATUS_OPTIONS.map((opt) => (
             <button
               key={opt.value}
