@@ -1,5 +1,7 @@
 import type { ProjectItem } from "@/lib/types";
 import { StatusBadge } from "./StatusBadge";
+import { DeleteButton } from "./DeleteButton";
+import { EditableField } from "./EditableField";
 
 /**
  * Groups project items by due date and renders a simple list.
@@ -30,12 +32,12 @@ export function ProjectItemList({
   }
 
   return (
-    <div className="mt-6 space-y-6">
+    <div className="space-y-6">
       {dates.map((date) => {
         const isHighlighted = selectedDate === date;
 
         return (
-          <section key={date} className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+          <section key={date} className="bg-white rounded-lg border border-gray-200 shadow-sm">
             <h2
               className={
                 isHighlighted
@@ -55,16 +57,30 @@ export function ProjectItemList({
                       : "px-4 py-3 flex items-center justify-between gap-4 transition-colors duration-200"
                   }
                 >
-                  <span
-                    className={
-                      isHighlighted
-                        ? "font-medium text-blue-900"
-                        : "font-medium text-gray-900"
-                    }
-                  >
-                    {item.title}
-                  </span>
-                  <StatusBadge itemId={item.id} currentStatus={item.status} />
+                  <div className="flex items-baseline gap-2 min-w-0">
+                    <EditableField
+                      itemId={item.id}
+                      field="title"
+                      value={item.title}
+                      allowEmpty={false}
+                      isHighlighted={isHighlighted}
+                      className={isHighlighted ? "font-medium text-blue-900" : "font-medium text-gray-900"}
+                    />
+                    <EditableField
+                      itemId={item.id}
+                      field="notes"
+                      value={item.notes}
+                      allowEmpty={true}
+                      isHighlighted={isHighlighted}
+                      placeholder="Add notes..."
+                      className={isHighlighted ? "text-sm text-blue-400" : "text-sm text-gray-400"}
+                      emptyClassName={isHighlighted ? "text-sm text-blue-300 italic" : "text-sm text-gray-300 italic"}
+                    />
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <StatusBadge itemId={item.id} currentStatus={item.status} />
+                    <DeleteButton itemId={item.id} />
+                  </div>
                 </li>
               ))}
             </ul>

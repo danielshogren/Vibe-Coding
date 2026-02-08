@@ -25,7 +25,7 @@ export function ProjectCalendarView({ items, itemCountsByDate }: ProjectCalendar
       </div>
 
       {/* Right column: calendar */}
-      <div className="lg:w-80 lg:flex-shrink-0 mt-8 lg:mt-0">
+      <div className="lg:w-80 lg:flex-shrink-0 mt-8 lg:mt-0 lg:sticky lg:top-52 lg:self-start">
         <Calendar
           itemCountsByDate={itemCountsByDate}
           selectedDate={selectedDate}

@@ -16,10 +16,17 @@ export default async function Home() {
   }
 
   return (
-    <main className="max-w-5xl mx-auto p-6">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Project Tracker</h1>
-      <ProjectItemForm />
-      <ProjectCalendarView items={allItems} itemCountsByDate={itemCountsByDate} />
+    <main className="max-w-5xl mx-auto">
+      {/* Sticky header: frosted glass + shadow */}
+      <div className="sticky top-0 z-10 bg-gray-50/80 backdrop-blur-md shadow-md px-6 pt-6 pb-4">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">Project Tracker</h1>
+        <ProjectItemForm />
+      </div>
+
+      {/* Scrollable content below */}
+      <div className="px-6 pb-6 pt-6">
+        <ProjectCalendarView items={allItems} itemCountsByDate={itemCountsByDate} />
+      </div>
     </main>
   );
 }
