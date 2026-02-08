@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTH_NAMES = [
   "January", "February", "March", "April", "May", "June",
@@ -12,9 +10,12 @@ interface CalendarProps {
   itemCountsByDate: Record<string, number>;
   selectedDate: string | null;
   onDateSelect: (date: string) => void;
+  viewYear: number;
+  viewMonth: number;
+  onMonthChange: (year: number, month: number) => void;
 }
 
-export function Calendar({ itemCountsByDate, selectedDate, onDateSelect }: CalendarProps) {
+export function Calendar({ itemCountsByDate, selectedDate, onDateSelect, viewYear, viewMonth, onMonthChange }: CalendarProps) {
   const today = new Date();
   const todayStr = [
     today.getFullYear(),
@@ -22,12 +23,8 @@ export function Calendar({ itemCountsByDate, selectedDate, onDateSelect }: Calen
     String(today.getDate()).padStart(2, "0"),
   ].join("-");
 
-  const [viewDate, setViewDate] = useState({
-    year: today.getFullYear(),
-    month: today.getMonth(),
-  });
-
-  const { year, month } = viewDate;
+  const year = viewYear;
+  const month = viewMonth;
   const firstDayOfWeek = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -41,19 +38,19 @@ export function Calendar({ itemCountsByDate, selectedDate, onDateSelect }: Calen
   }
 
   function prevMonth() {
-    setViewDate((prev) =>
-      prev.month === 0
-        ? { year: prev.year - 1, month: 11 }
-        : { year: prev.year, month: prev.month - 1 }
-    );
+    if (month === 0) {
+      onMonthChange(year - 1, 11);
+    } else {
+      onMonthChange(year, month - 1);
+    }
   }
 
   function nextMonth() {
-    setViewDate((prev) =>
-      prev.month === 11
-        ? { year: prev.year + 1, month: 0 }
-        : { year: prev.year, month: prev.month + 1 }
-    );
+    if (month === 11) {
+      onMonthChange(year + 1, 0);
+    } else {
+      onMonthChange(year, month + 1);
+    }
   }
 
   return (

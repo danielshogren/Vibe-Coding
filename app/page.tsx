@@ -1,7 +1,6 @@
 import { getActiveProjectItems, getArchivedProjectItems } from "@/lib/store";
 import { ProjectItemForm } from "@/app/components/ProjectItemForm";
 import { ProjectCalendarView } from "@/app/components/ProjectCalendarView";
-import { ArchivedSection } from "@/app/components/ArchivedSection";
 
 /**
  * Single-page MVP: form at top, list of project items grouped by date below,
@@ -27,8 +26,7 @@ export default async function Home() {
 
       {/* Scrollable content below */}
       <div className="px-6 pb-6 pt-6">
-        <ProjectCalendarView items={activeItems} itemCountsByDate={itemCountsByDate} />
-        <ArchivedSection items={archivedItems} />
+        <ProjectCalendarView items={activeItems} itemCountsByDate={itemCountsByDate} archivedItems={archivedItems} />
       </div>
     </main>
   );

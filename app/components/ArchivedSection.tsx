@@ -17,25 +17,29 @@ export function ArchivedSection({ items }: { items: ProjectItem[] }) {
   if (items.length === 0) return null;
 
   return (
-    <div className="mt-8">
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm mt-4">
+      {/* Collapsible header */}
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors"
+        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors rounded-lg"
       >
-        <svg
-          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-        Archived ({items.length})
+        <span className="flex items-center gap-2">
+          <svg
+            className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+          Archived
+        </span>
+        <span className="text-xs text-gray-400">{items.length}</span>
       </button>
 
       {isOpen && (
-        <div className="mt-4 space-y-3">
+        <div className="px-3 pb-3 space-y-2">
           {items.map((item) => (
             <ArchivedCard key={item.id} item={item} />
           ))}
@@ -54,30 +58,30 @@ function ArchivedCard({ item }: { item: ProjectItem }) {
     });
   }
 
+  // Extract just the day number from the date
+  const day = parseInt(item.date.split("-")[2], 10);
+
   return (
-    <div className="bg-gray-50 rounded-lg border border-gray-200 opacity-75">
-      <div className="px-4 py-2 bg-gray-100 border-b border-gray-200 flex items-center justify-between gap-4 rounded-t-lg">
-        <span className="font-semibold text-gray-500 truncate">{item.title}</span>
-        <div className="flex items-center gap-2 shrink-0">
-          <span
-            className={`text-xs px-2 py-0.5 rounded-full capitalize ${STATUS_COLORS[item.status]}`}
-          >
-            {item.status.replace("_", " ")}
-          </span>
-          <button
-            onClick={handleRestore}
-            disabled={isPending}
-            className="px-2 py-1 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded hover:bg-blue-50 disabled:opacity-50 transition-colors"
-          >
-            {isPending ? "Restoring…" : "Restore"}
-          </button>
-        </div>
+    <div className="bg-gray-50 rounded-md border border-gray-100 px-3 py-2">
+      {/* Row 1: title + restore */}
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-sm font-medium text-gray-600 truncate">{item.title}</span>
+        <button
+          onClick={handleRestore}
+          disabled={isPending}
+          className="px-2 py-0.5 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded hover:bg-blue-50 disabled:opacity-50 transition-colors shrink-0"
+        >
+          {isPending ? "Restoring…" : "Restore"}
+        </button>
       </div>
-      <div className="px-4 py-2 flex items-center gap-4">
-        <span className="text-sm text-gray-400 shrink-0">Due: {item.date}</span>
-        {item.notes && (
-          <span className="text-sm text-gray-400 truncate">{item.notes}</span>
-        )}
+      {/* Row 2: status badge + day number */}
+      <div className="flex items-center gap-2 mt-1">
+        <span
+          className={`text-[11px] px-1.5 py-0.5 rounded-full capitalize ${STATUS_COLORS[item.status]}`}
+        >
+          {item.status.replace("_", " ")}
+        </span>
+        <span className="text-xs text-gray-400">Day {day}</span>
       </div>
     </div>
   );

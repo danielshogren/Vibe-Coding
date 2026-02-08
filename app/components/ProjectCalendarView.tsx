@@ -4,18 +4,35 @@ import { useState, useTransition } from "react";
 import type { ProjectItem } from "@/lib/types";
 import { ProjectItemList } from "./ProjectItemList";
 import { Calendar } from "./Calendar";
+import { ArchivedSection } from "./ArchivedSection";
 import { archiveProjectItems } from "@/app/actions";
 
 interface ProjectCalendarViewProps {
   items: ProjectItem[];
   itemCountsByDate: Record<string, number>;
+  archivedItems: ProjectItem[];
 }
 
-export function ProjectCalendarView({ items, itemCountsByDate }: ProjectCalendarViewProps) {
+export function ProjectCalendarView({ items, itemCountsByDate, archivedItems }: ProjectCalendarViewProps) {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [isPending, startTransition] = useTransition();
+
+  const now = new Date();
+  const [viewYear, setViewYear] = useState(now.getFullYear());
+  const [viewMonth, setViewMonth] = useState(now.getMonth());
+
+  function handleMonthChange(year: number, month: number) {
+    setViewYear(year);
+    setViewMonth(month);
+  }
+
+  // Filter archived items to match the calendar's displayed month
+  const filteredArchived = archivedItems.filter((item) => {
+    const [y, m] = item.date.split("-").map(Number);
+    return y === viewYear && m === viewMonth + 1;
+  });
 
   function handleDateSelect(date: string) {
     setSelectedDate((prev) => (prev === date ? null : date));
@@ -111,13 +128,17 @@ export function ProjectCalendarView({ items, itemCountsByDate }: ProjectCalendar
         />
       </div>
 
-      {/* Right column: calendar */}
-      <div className="lg:w-80 lg:flex-shrink-0 mt-8 lg:mt-0 lg:sticky lg:top-52 lg:self-start">
+      {/* Right column: calendar + archived */}
+      <div className="lg:w-80 lg:flex-shrink-0 mt-8 lg:mt-0 lg:sticky lg:top-52 lg:self-start lg:max-h-[calc(100vh-14rem)] lg:overflow-y-auto">
         <Calendar
           itemCountsByDate={itemCountsByDate}
           selectedDate={selectedDate}
           onDateSelect={handleDateSelect}
+          viewYear={viewYear}
+          viewMonth={viewMonth}
+          onMonthChange={handleMonthChange}
         />
+        <ArchivedSection items={filteredArchived} />
       </div>
     </div>
   );
