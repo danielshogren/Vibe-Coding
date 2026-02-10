@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 export function SettingsButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +45,7 @@ export function SettingsButton() {
         </svg>
       </button>
 
-      {isOpen && (
+      {isOpen && createPortal(
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
@@ -90,7 +91,8 @@ export function SettingsButton() {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
