@@ -4,6 +4,7 @@ import type { ProjectItem } from "@/lib/types";
 import { StatusBadge } from "./StatusBadge";
 import { DeleteButton } from "./DeleteButton";
 import { EditableField } from "./EditableField";
+import { FileLinkButton } from "./FileLinkButton";
 
 /**
  * Renders a flat list of project item cards sorted by date.
@@ -99,6 +100,7 @@ export function ProjectItemList({
                 className={isHighlighted ? "text-sm text-blue-400" : "text-sm text-gray-400"}
                 emptyClassName={isHighlighted ? "text-sm text-blue-300 italic" : "text-sm text-gray-300 italic"}
               />
+              <FileLinkButton itemId={item.id} fileUrl={item.fileUrl ?? ""} />
             </div>
           </section>
         );

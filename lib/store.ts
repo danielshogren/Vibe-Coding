@@ -16,11 +16,12 @@ function generateId(): string {
  * Add a new project item to the store.
  * Returns the created item (with id set).
  */
-export function addProjectItem(input: Omit<ProjectItem, "id" | "archived">): ProjectItem {
+export function addProjectItem(input: Omit<ProjectItem, "id" | "archived" | "fileUrl">): ProjectItem {
   const item: ProjectItem = {
     ...input,
     id: generateId(),
     archived: false,
+    fileUrl: "",
   };
   items.push(item);
   return item;
@@ -50,7 +51,7 @@ export function updateProjectItemStatus(
  */
 export function updateProjectItemField(
   id: string,
-  field: "title" | "notes",
+  field: "title" | "notes" | "fileUrl",
   value: string
 ): ProjectItem | null {
   const item = items.find((i) => i.id === id);

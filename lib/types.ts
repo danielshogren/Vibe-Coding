@@ -18,4 +18,5 @@ export interface ProjectItem {
   status: ProjectItemStatus;
   date: string;
   archived: boolean;
+  fileUrl: string;
 }
