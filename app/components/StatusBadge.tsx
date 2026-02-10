@@ -12,10 +12,17 @@ const STATUS_OPTIONS: { value: ProjectItemStatus; label: string }[] = [
 ];
 
 const STATUS_COLORS: Record<ProjectItemStatus, string> = {
-  backlog: "bg-gray-100 text-gray-700",
-  in_progress: "bg-blue-100 text-blue-700",
-  stuck: "bg-amber-100 text-amber-700",
-  done: "bg-green-100 text-green-700",
+  backlog: "bg-status-backlog text-status-backlog-text",
+  in_progress: "bg-status-progress text-status-progress-text",
+  stuck: "bg-status-stuck text-status-stuck-text",
+  done: "bg-status-done text-status-done-text",
+};
+
+const STATUS_DOT_COLORS: Record<ProjectItemStatus, string> = {
+  backlog: "bg-status-backlog-dot",
+  in_progress: "bg-status-progress-dot",
+  stuck: "bg-status-stuck-dot",
+  done: "bg-status-done-dot",
 };
 
 export function StatusBadge({
@@ -65,22 +72,22 @@ export function StatusBadge({
         type="button"
         onClick={() => setIsOpen((v) => !v)}
         disabled={isPending}
-        className={`text-sm px-2 py-1 rounded-full capitalize cursor-pointer transition-colors duration-200 ${STATUS_COLORS[currentStatus]} ${isPending ? "opacity-50" : "hover:ring-2 hover:ring-offset-1 hover:ring-gray-300"}`}
+        className={`text-sm px-2 py-1 rounded-full capitalize cursor-pointer transition-colors duration-200 ${STATUS_COLORS[currentStatus]} ${isPending ? "opacity-50" : "hover:ring-2 hover:ring-offset-1 hover:ring-edge-strong"}`}
       >
         {currentStatus.replace("_", " ")}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-1 z-50 w-36 bg-white rounded-lg border border-gray-200 shadow-lg overflow-hidden">
+        <div className="absolute right-0 top-full mt-1 z-50 w-36 bg-surface-card rounded-lg border border-edge shadow-lg overflow-hidden">
           {STATUS_OPTIONS.map((opt) => (
             <button
               key={opt.value}
               type="button"
               onClick={() => handleSelect(opt.value)}
-              className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2 hover:bg-gray-50 transition-colors duration-150 ${opt.value === currentStatus ? "font-semibold" : ""}`}
+              className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2 hover:bg-surface-hover transition-colors duration-150 ${opt.value === currentStatus ? "font-semibold" : ""}`}
             >
               <span
-                className={`inline-block w-2 h-2 rounded-full ${STATUS_COLORS[opt.value].split(" ")[0].replace("100", "400")}`}
+                className={`inline-block w-2 h-2 rounded-full ${STATUS_DOT_COLORS[opt.value]}`}
               />
               {opt.label}
             </button>

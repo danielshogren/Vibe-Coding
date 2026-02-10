@@ -9,10 +9,10 @@ export function ProjectItemForm() {
   return (
     <form
       action={createProjectItem}
-      className="flex flex-wrap items-end gap-4 p-4 bg-white rounded-lg border border-gray-200 shadow-sm"
+      className="flex flex-wrap items-end gap-4 p-4 bg-surface-card rounded-lg border border-edge shadow-sm"
     >
       <div className="flex flex-col gap-1">
-        <label htmlFor="title" className="text-sm font-medium text-gray-700">
+        <label htmlFor="title" className="text-sm font-medium text-ink-secondary">
           Title
         </label>
         <input
@@ -21,18 +21,18 @@ export function ProjectItemForm() {
           type="text"
           required
           placeholder="Project or task name"
-          className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[200px]"
+          className="px-3 py-2 border border-edge-strong rounded-md bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary min-w-[200px]"
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="status" className="text-sm font-medium text-gray-700">
+        <label htmlFor="status" className="text-sm font-medium text-ink-secondary">
           Status
         </label>
         <select
           id="status"
           name="status"
-          className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="px-3 py-2 border border-edge-strong rounded-md bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary"
         >
           <option value="backlog">Backlog</option>
           <option value="in_progress">In progress</option>
@@ -42,7 +42,7 @@ export function ProjectItemForm() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="notes" className="text-sm font-medium text-gray-700">
+        <label htmlFor="notes" className="text-sm font-medium text-ink-secondary">
           Notes
         </label>
         <input
@@ -50,26 +50,26 @@ export function ProjectItemForm() {
           name="notes"
           type="text"
           placeholder="Optional notes"
-          className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[200px]"
+          className="px-3 py-2 border border-edge-strong rounded-md bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary min-w-[200px]"
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="date" className="text-sm font-medium text-gray-700">
+        <label htmlFor="date" className="text-sm font-medium text-ink-secondary">
           Due Date
         </label>
         <input
           id="date"
           name="date"
           type="date"
-          className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="px-3 py-2 border border-edge-strong rounded-md bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary"
           defaultValue={new Date().toISOString().slice(0, 10)}
         />
       </div>
 
       <button
         type="submit"
-        className="px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        className="px-4 py-2 bg-primary text-white font-medium rounded-md hover:bg-primary-hover focus:ring-2 focus:ring-primary focus:ring-offset-2"
       >
         Add item
       </button>

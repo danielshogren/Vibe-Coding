@@ -1,3 +1,135 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Surface */
+  --surface: 247 243 235;
+  --surface-card: 255 252 245;
+  --surface-elevated: 237 232 222;
+  --surface-hover: 240 235 224;
+  --surface-input: 255 255 255;
+
+  /* Borders */
+  --edge: 224 217 204;
+  --edge-strong: 207 199 184;
+
+  /* Text */
+  --ink: 44 33 18;
+  --ink-secondary: 107 92 72;
+  --ink-muted: 154 141 124;
+  --ink-faint: 190 179 164;
+
+  /* Primary (blue) */
+  --primary: 37 99 235;
+  --primary-hover: 29 78 216;
+  --primary-light: 219 234 254;
+  --primary-text: 30 64 175;
+
+  /* Danger (red) */
+  --danger: 220 38 38;
+  --danger-hover: 185 28 28;
+  --danger-light: 254 226 226;
+  --danger-text: 220 38 38;
+
+  /* Accent (amber) */
+  --accent: 217 119 6;
+  --accent-hover: 180 83 9;
+  --accent-border: 251 191 36;
+  --accent-ring: 253 230 138;
+
+  /* Highlight (selection) */
+  --highlight: 219 234 254;
+  --highlight-subtle: 239 246 255;
+  --highlight-text: 30 58 138;
+  --highlight-muted: 96 165 250;
+
+  /* Indicator dot (calendar) */
+  --indicator: 59 130 246;
+
+  /* Status: Backlog */
+  --status-backlog: 243 244 246;
+  --status-backlog-text: 55 65 81;
+  --status-backlog-dot: 156 163 175;
+
+  /* Status: In Progress */
+  --status-progress: 219 234 254;
+  --status-progress-text: 29 78 216;
+  --status-progress-dot: 59 130 246;
+
+  /* Status: Stuck */
+  --status-stuck: 254 243 199;
+  --status-stuck-text: 180 83 9;
+  --status-stuck-dot: 245 158 11;
+
+  /* Status: Done */
+  --status-done: 220 252 231;
+  --status-done-text: 21 128 61;
+  --status-done-dot: 34 197 94;
+}
+
+[data-theme="dark"] {
+  /* Surface */
+  --surface: 20 24 36;
+  --surface-card: 30 36 51;
+  --surface-elevated: 37 43 59;
+  --surface-hover: 46 53 73;
+  --surface-input: 26 32 48;
+
+  /* Borders */
+  --edge: 46 53 73;
+  --edge-strong: 61 69 96;
+
+  /* Text */
+  --ink: 232 226 214;
+  --ink-secondary: 155 163 184;
+  --ink-muted: 107 115 137;
+  --ink-faint: 77 85 112;
+
+  /* Primary (steel blue) */
+  --primary: 91 141 198;
+  --primary-hover: 74 120 176;
+  --primary-light: 30 42 66;
+  --primary-text: 140 180 220;
+
+  /* Danger (muted rose) */
+  --danger: 196 96 106;
+  --danger-hover: 170 70 80;
+  --danger-light: 60 30 35;
+  --danger-text: 220 120 130;
+
+  /* Accent (champagne gold) */
+  --accent: 201 168 76;
+  --accent-hover: 175 142 55;
+  --accent-border: 160 130 50;
+  --accent-ring: 80 65 25;
+
+  /* Highlight (selection) */
+  --highlight: 30 42 66;
+  --highlight-subtle: 25 35 55;
+  --highlight-text: 140 180 220;
+  --highlight-muted: 91 141 198;
+
+  /* Indicator dot (calendar) */
+  --indicator: 91 141 198;
+
+  /* Status: Backlog */
+  --status-backlog: 37 43 59;
+  --status-backlog-text: 155 163 184;
+  --status-backlog-dot: 107 115 137;
+
+  /* Status: In Progress */
+  --status-progress: 25 40 70;
+  --status-progress-text: 120 165 215;
+  --status-progress-dot: 91 141 198;
+
+  /* Status: Stuck */
+  --status-stuck: 55 45 20;
+  --status-stuck-text: 201 168 76;
+  --status-stuck-dot: 201 168 76;
+
+  /* Status: Done */
+  --status-done: 20 50 30;
+  --status-done-text: 100 180 120;
+  --status-done-dot: 80 160 100;
+}

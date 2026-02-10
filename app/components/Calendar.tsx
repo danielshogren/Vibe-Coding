@@ -54,22 +54,22 @@ export function Calendar({ itemCountsByDate, selectedDate, onDateSelect, viewYea
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4">
+    <div className="bg-surface-card rounded-lg border border-edge shadow-sm p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <button
           onClick={prevMonth}
-          className="p-1 rounded hover:bg-gray-100 text-gray-600"
+          className="p-1 rounded hover:bg-surface-hover text-ink-secondary"
           aria-label="Previous month"
         >
           &larr;
         </button>
-        <span className="font-semibold text-gray-900">
+        <span className="font-semibold text-ink">
           {MONTH_NAMES[month]} {year}
         </span>
         <button
           onClick={nextMonth}
-          className="p-1 rounded hover:bg-gray-100 text-gray-600"
+          className="p-1 rounded hover:bg-surface-hover text-ink-secondary"
           aria-label="Next month"
         >
           &rarr;
@@ -77,7 +77,7 @@ export function Calendar({ itemCountsByDate, selectedDate, onDateSelect, viewYea
       </div>
 
       {/* Day-of-week labels */}
-      <div className="grid grid-cols-7 text-center text-xs font-medium text-gray-500 mb-1">
+      <div className="grid grid-cols-7 text-center text-xs font-medium text-ink-muted mb-1">
         {DAY_LABELS.map((d) => (
           <div key={d} className="py-1">{d}</div>
         ))}
@@ -97,9 +97,9 @@ export function Calendar({ itemCountsByDate, selectedDate, onDateSelect, viewYea
 
           const baseCls = [
             "relative flex flex-col items-center justify-center py-1 rounded-md",
-            isToday && "font-bold ring-2 ring-blue-500",
-            isSelected && "bg-blue-100",
-            !isToday && !isSelected && "text-gray-800",
+            isToday && "font-bold ring-2 ring-indicator",
+            isSelected && "bg-highlight",
+            !isToday && !isSelected && "text-ink",
           ]
             .filter(Boolean)
             .join(" ");
@@ -110,10 +110,10 @@ export function Calendar({ itemCountsByDate, selectedDate, onDateSelect, viewYea
                 key={day}
                 type="button"
                 onClick={() => onDateSelect(ds)}
-                className={`${baseCls} cursor-pointer hover:bg-blue-50`}
+                className={`${baseCls} cursor-pointer hover:bg-highlight-subtle`}
               >
                 {day}
-                <span className="block w-1.5 h-1.5 rounded-full mt-0.5 bg-blue-500" />
+                <span className="block w-1.5 h-1.5 rounded-full mt-0.5 bg-indicator" />
               </button>
             );
           }

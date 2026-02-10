@@ -58,10 +58,9 @@ export function FileLinkButton({
             <button
               type="button"
               onClick={() => window.open(fileUrl, "_blank", "noopener,noreferrer")}
-              className="flex items-center gap-1.5 text-blue-500 hover:text-blue-600 transition-colors duration-200"
+              className="flex items-center gap-1.5 text-primary hover:text-primary-hover transition-colors duration-200"
               aria-label="Open file link"
             >
-              {/* Heroicons outline: document-duplicate (stacked pages) */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -84,10 +83,9 @@ export function FileLinkButton({
                 setUrlValue(fileUrl);
                 setIsModalOpen(true);
               }}
-              className="p-0.5 rounded text-gray-300 opacity-0 group-hover:opacity-100 hover:text-blue-500 transition-all duration-200"
+              className="p-0.5 rounded text-ink-faint opacity-0 group-hover:opacity-100 hover:text-primary transition-all duration-200"
               aria-label="Edit file link"
             >
-              {/* Heroicons outline: pencil-square */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -111,10 +109,9 @@ export function FileLinkButton({
               setUrlValue("");
               setIsModalOpen(true);
             }}
-            className="flex items-center gap-1.5 text-gray-300 hover:text-gray-400 transition-colors duration-200"
+            className="flex items-center gap-1.5 text-ink-faint hover:text-ink-muted transition-colors duration-200"
             aria-label="Add file link"
           >
-            {/* Heroicons outline: document-plus */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -143,18 +140,18 @@ export function FileLinkButton({
           }}
         >
           <div
-            className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4"
+            className="bg-surface-card rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 border border-edge"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-full bg-primary-light flex items-center justify-center mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6 text-blue-600"
+                  className="w-6 h-6 text-primary"
                 >
                   <path
                     strokeLinecap="round"
@@ -163,7 +160,7 @@ export function FileLinkButton({
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <h3 className="text-lg font-semibold text-ink mb-4">
                 {hasLink ? "Edit File Link" : "Add File Link"}
               </h3>
               <input
@@ -175,13 +172,13 @@ export function FileLinkButton({
                 }}
                 placeholder="https://example.com/file"
                 autoFocus
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-6"
+                className="w-full px-3 py-2 text-sm border border-edge-strong rounded-lg bg-surface-input text-ink focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary mb-6"
               />
               <div className="flex gap-3 w-full">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-ink-secondary bg-surface-card border border-edge rounded-lg hover:bg-surface-hover transition-colors duration-200"
                 >
                   Cancel
                 </button>
@@ -190,7 +187,7 @@ export function FileLinkButton({
                     type="button"
                     onClick={handleRemove}
                     disabled={isPending}
-                    className="flex-1 px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-300 rounded-lg hover:bg-red-50 disabled:opacity-50 transition-colors duration-200"
+                    className="flex-1 px-4 py-2 text-sm font-medium text-danger-text bg-surface-card border border-danger rounded-lg hover:bg-danger-light disabled:opacity-50 transition-colors duration-200"
                   >
                     {isPending ? "Removing..." : "Remove"}
                   </button>
@@ -199,7 +196,7 @@ export function FileLinkButton({
                   type="button"
                   onClick={handleSave}
                   disabled={isPending || !urlValue.trim()}
-                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors duration-200"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-hover disabled:opacity-50 transition-colors duration-200"
                 >
                   {isPending ? "Saving..." : "OK"}
                 </button>

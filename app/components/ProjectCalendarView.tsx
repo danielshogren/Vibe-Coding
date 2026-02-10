@@ -102,44 +102,44 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems }: 
           {!selectionMode ? (
             <button
               onClick={() => setSelectionMode(true)}
-              className="px-3 py-1.5 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+              className="px-3 py-1.5 text-sm font-medium text-ink-secondary bg-surface-card border border-edge rounded-md hover:bg-surface-hover transition-colors"
             >
               Select
             </button>
           ) : (
             <>
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-ink-secondary">
                 {selectedIds.size} selected
               </span>
               <button
                 onClick={handleSelectAll}
-                className="px-2 py-1 text-xs font-medium text-gray-600 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+                className="px-2 py-1 text-xs font-medium text-ink-secondary bg-surface-card border border-edge rounded hover:bg-surface-hover transition-colors"
               >
                 Select All
               </button>
               <button
                 onClick={handleDeselectAll}
-                className="px-2 py-1 text-xs font-medium text-gray-600 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+                className="px-2 py-1 text-xs font-medium text-ink-secondary bg-surface-card border border-edge rounded hover:bg-surface-hover transition-colors"
               >
                 Deselect All
               </button>
               <button
                 onClick={handleArchiveSelected}
                 disabled={selectedIds.size === 0 || isPending}
-                className="px-3 py-1 text-xs font-medium text-white bg-amber-600 rounded hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1 text-xs font-medium text-white bg-accent rounded hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                {isPending ? "Archiving…" : "Archive Selected"}
+                {isPending ? "Archiving..." : "Archive Selected"}
               </button>
               <button
                 onClick={() => setShowDeleteConfirm(true)}
                 disabled={selectedIds.size === 0 || isPending}
-                className="px-3 py-1 text-xs font-medium text-white bg-red-600 rounded hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1 text-xs font-medium text-white bg-danger rounded hover:bg-danger-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Delete Selected
               </button>
               <button
                 onClick={handleCancel}
-                className="px-2 py-1 text-xs font-medium text-gray-500 hover:text-gray-700 transition-colors"
+                className="px-2 py-1 text-xs font-medium text-ink-muted hover:text-ink-secondary transition-colors"
               >
                 Cancel
               </button>
@@ -174,18 +174,18 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems }: 
           onClick={() => setShowDeleteConfirm(false)}
         >
           <div
-            className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4"
+            className="bg-surface-card rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 border border-edge"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-full bg-danger-light flex items-center justify-center mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6 text-red-600"
+                  className="w-6 h-6 text-danger"
                 >
                   <path
                     strokeLinecap="round"
@@ -194,10 +194,10 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems }: 
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-lg font-semibold text-ink mb-2">
                 Delete {selectedIds.size} Project {selectedIds.size === 1 ? "Item" : "Items"}
               </h3>
-              <p className="text-sm text-gray-500 mb-6">
+              <p className="text-sm text-ink-muted mb-6">
                 Are you sure you want to delete{" "}
                 <strong>{selectedIds.size} {selectedIds.size === 1 ? "item" : "items"}</strong>?
                 This will permanently remove {selectedIds.size === 1 ? "it" : "them"} and{" "}
@@ -207,7 +207,7 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems }: 
                 <button
                   type="button"
                   onClick={() => setShowDeleteConfirm(false)}
-                  className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-ink-secondary bg-surface-card border border-edge rounded-lg hover:bg-surface-hover transition-colors duration-200"
                 >
                   No, Keep {selectedIds.size === 1 ? "It" : "Them"}
                 </button>
@@ -215,7 +215,7 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems }: 
                   type="button"
                   onClick={handleDeleteSelected}
                   disabled={isPending}
-                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors duration-200"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-danger rounded-lg hover:bg-danger-hover disabled:opacity-50 transition-colors duration-200"
                 >
                   {isPending ? "Deleting..." : "Yes, Delete All"}
                 </button>

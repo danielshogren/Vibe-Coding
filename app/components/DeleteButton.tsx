@@ -29,7 +29,7 @@ export function DeleteButton({ itemId }: { itemId: string }) {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="p-1 rounded-md text-gray-300 hover:text-red-400 hover:bg-red-50 transition-colors duration-200"
+        className="p-1 rounded-md text-ink-faint hover:text-danger hover:bg-danger-light transition-colors duration-200"
         aria-label="Delete item"
       >
         <svg
@@ -54,18 +54,18 @@ export function DeleteButton({ itemId }: { itemId: string }) {
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4"
+            className="bg-surface-card rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 border border-edge"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-full bg-danger-light flex items-center justify-center mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6 text-red-600"
+                  className="w-6 h-6 text-danger"
                 >
                   <path
                     strokeLinecap="round"
@@ -74,17 +74,17 @@ export function DeleteButton({ itemId }: { itemId: string }) {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-lg font-semibold text-ink mb-2">
                 Delete Project Item
               </h3>
-              <p className="text-sm text-gray-500 mb-6">
+              <p className="text-sm text-ink-muted mb-6">
                 Are you sure you want to delete this item? This action cannot be undone.
               </p>
               <div className="flex gap-3 w-full">
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-ink-secondary bg-surface-card border border-edge rounded-lg hover:bg-surface-hover transition-colors duration-200"
                 >
                   No, Keep It
                 </button>
@@ -92,7 +92,7 @@ export function DeleteButton({ itemId }: { itemId: string }) {
                   type="button"
                   onClick={handleDelete}
                   disabled={isPending}
-                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors duration-200"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-danger rounded-lg hover:bg-danger-hover disabled:opacity-50 transition-colors duration-200"
                 >
                   {isPending ? "Deleting..." : "Yes, Delete"}
                 </button>

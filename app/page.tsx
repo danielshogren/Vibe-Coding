@@ -20,9 +20,9 @@ export default async function Home() {
   return (
     <main className="max-w-5xl mx-auto">
       {/* Sticky header: frosted glass + shadow */}
-      <div className="sticky top-0 z-10 bg-gray-50/80 backdrop-blur-md shadow-md px-6 pt-6 pb-4">
+      <div className="sticky top-0 z-10 bg-surface/80 backdrop-blur-md shadow-md px-6 pt-6 pb-4">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-bold text-gray-900">Project Tracker</h1>
+          <h1 className="text-2xl font-bold text-ink">Project Tracker</h1>
           <SettingsButton />
         </div>
         <ProjectItemForm />

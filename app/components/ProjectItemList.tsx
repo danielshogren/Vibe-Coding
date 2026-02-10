@@ -28,7 +28,7 @@ export function ProjectItemList({
 }) {
   if (items.length === 0) {
     return (
-      <p className="text-gray-500 mt-4 p-4">No project items yet. Add one above.</p>
+      <p className="text-ink-muted mt-4 p-4">No project items yet. Add one above.</p>
     );
   }
 
@@ -41,8 +41,8 @@ export function ProjectItemList({
         return (
           <section
             key={item.id}
-            className={`bg-white rounded-lg border shadow-sm ${
-              isSelected ? "border-amber-400 ring-2 ring-amber-200" : "border-gray-200"
+            className={`bg-surface-card rounded-lg border shadow-sm ${
+              isSelected ? "border-accent-border ring-2 ring-accent-ring" : "border-edge"
             }`}
             onClick={selectionMode ? () => onToggleSelect?.(item.id) : undefined}
             style={selectionMode ? { cursor: "pointer" } : undefined}
@@ -50,8 +50,8 @@ export function ProjectItemList({
             <div
               className={
                 isHighlighted
-                  ? "px-4 py-2 bg-blue-100 border-b border-gray-200 flex items-center justify-between gap-4 rounded-t-lg"
-                  : "px-4 py-2 bg-gray-100 border-b border-gray-200 flex items-center justify-between gap-4 rounded-t-lg"
+                  ? "px-4 py-2 bg-highlight border-b border-edge flex items-center justify-between gap-4 rounded-t-lg"
+                  : "px-4 py-2 bg-surface-elevated border-b border-edge flex items-center justify-between gap-4 rounded-t-lg"
               }
             >
               <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -61,7 +61,7 @@ export function ProjectItemList({
                     checked={isSelected ?? false}
                     onChange={() => onToggleSelect?.(item.id)}
                     onClick={(e) => e.stopPropagation()}
-                    className="w-4 h-4 rounded border-gray-300 text-amber-600 focus:ring-amber-500 shrink-0"
+                    className="w-4 h-4 rounded border-edge-strong text-accent focus:ring-accent shrink-0"
                   />
                 )}
                 <EditableField
@@ -70,7 +70,7 @@ export function ProjectItemList({
                   value={item.title}
                   allowEmpty={false}
                   isHighlighted={isHighlighted}
-                  className={isHighlighted ? "font-semibold text-blue-900" : "font-semibold text-gray-700"}
+                  className={isHighlighted ? "font-semibold text-highlight-text" : "font-semibold text-ink-secondary"}
                 />
               </div>
               {!selectionMode && (
@@ -83,11 +83,11 @@ export function ProjectItemList({
             <div
               className={
                 isHighlighted
-                  ? "px-4 py-3 flex items-center gap-4 bg-blue-50 transition-colors duration-200"
+                  ? "px-4 py-3 flex items-center gap-4 bg-highlight-subtle transition-colors duration-200"
                   : "px-4 py-3 flex items-center gap-4 transition-colors duration-200"
               }
             >
-              <span className={isHighlighted ? "text-sm text-blue-700 shrink-0" : "text-sm text-gray-500 shrink-0"}>
+              <span className={isHighlighted ? "text-sm text-highlight-text shrink-0" : "text-sm text-ink-muted shrink-0"}>
                 Due: {item.date}
               </span>
               <EditableField
@@ -97,8 +97,8 @@ export function ProjectItemList({
                 allowEmpty={true}
                 isHighlighted={isHighlighted}
                 placeholder="Add notes..."
-                className={isHighlighted ? "text-sm text-blue-400" : "text-sm text-gray-400"}
-                emptyClassName={isHighlighted ? "text-sm text-blue-300 italic" : "text-sm text-gray-300 italic"}
+                className={isHighlighted ? "text-sm text-highlight-muted" : "text-sm text-ink-faint"}
+                emptyClassName={isHighlighted ? "text-sm text-highlight-muted italic" : "text-sm text-ink-faint italic"}
               />
               <FileLinkButton itemId={item.id} fileUrl={item.fileUrl ?? ""} />
             </div>

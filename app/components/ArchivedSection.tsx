@@ -5,10 +5,10 @@ import type { ProjectItem, ProjectItemStatus } from "@/lib/types";
 import { unarchiveProjectItem } from "@/app/actions";
 
 const STATUS_COLORS: Record<ProjectItemStatus, string> = {
-  backlog: "bg-gray-100 text-gray-700",
-  in_progress: "bg-blue-100 text-blue-700",
-  stuck: "bg-amber-100 text-amber-700",
-  done: "bg-green-100 text-green-700",
+  backlog: "bg-status-backlog text-status-backlog-text",
+  in_progress: "bg-status-progress text-status-progress-text",
+  stuck: "bg-status-stuck text-status-stuck-text",
+  done: "bg-status-done text-status-done-text",
 };
 
 export function ArchivedSection({ items }: { items: ProjectItem[] }) {
@@ -17,11 +17,11 @@ export function ArchivedSection({ items }: { items: ProjectItem[] }) {
   if (items.length === 0) return null;
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm mt-4">
+    <div className="bg-surface-card rounded-lg border border-edge shadow-sm mt-4">
       {/* Collapsible header */}
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors rounded-lg"
+        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-ink-secondary hover:bg-surface-hover transition-colors rounded-lg"
       >
         <span className="flex items-center gap-2">
           <svg
@@ -35,7 +35,7 @@ export function ArchivedSection({ items }: { items: ProjectItem[] }) {
           </svg>
           Archived
         </span>
-        <span className="text-xs text-gray-400">{items.length}</span>
+        <span className="text-xs text-ink-faint">{items.length}</span>
       </button>
 
       {isOpen && (
@@ -58,20 +58,19 @@ function ArchivedCard({ item }: { item: ProjectItem }) {
     });
   }
 
-  // Extract just the day number from the date
   const day = parseInt(item.date.split("-")[2], 10);
 
   return (
-    <div className="bg-gray-50 rounded-md border border-gray-100 px-3 py-2">
+    <div className="bg-surface rounded-md border border-edge px-3 py-2">
       {/* Row 1: title + restore */}
       <div className="flex items-center justify-between gap-2">
-        <span className="text-sm font-medium text-gray-600 truncate">{item.title}</span>
+        <span className="text-sm font-medium text-ink-secondary truncate">{item.title}</span>
         <button
           onClick={handleRestore}
           disabled={isPending}
-          className="px-2 py-0.5 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded hover:bg-blue-50 disabled:opacity-50 transition-colors shrink-0"
+          className="px-2 py-0.5 text-xs font-medium text-primary bg-surface-card border border-primary/30 rounded hover:bg-primary-light disabled:opacity-50 transition-colors shrink-0"
         >
-          {isPending ? "Restoring…" : "Restore"}
+          {isPending ? "Restoring..." : "Restore"}
         </button>
       </div>
       {/* Row 2: status badge + day number */}
@@ -81,7 +80,7 @@ function ArchivedCard({ item }: { item: ProjectItem }) {
         >
           {item.status.replace("_", " ")}
         </span>
-        <span className="text-xs text-gray-400">Day {day}</span>
+        <span className="text-xs text-ink-faint">Day {day}</span>
       </div>
     </div>
   );
