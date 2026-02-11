@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useTransition } from "react";
 import { updateProjectItemField } from "@/app/actions";
+import { getEmbedInfo } from "@/lib/embedUtils";
 
 export function MediaLinkButton({
   itemId,
@@ -11,6 +12,7 @@ export function MediaLinkButton({
   mediaUrl: string;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [urlValue, setUrlValue] = useState(mediaUrl);
   const [isPending, startTransition] = useTransition();
 
@@ -21,13 +23,16 @@ export function MediaLinkButton({
 
   // Close on Escape
   useEffect(() => {
-    if (!isModalOpen) return;
+    if (!isModalOpen && !isVideoOpen) return;
     function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setIsModalOpen(false);
+      if (e.key === "Escape") {
+        setIsModalOpen(false);
+        setIsVideoOpen(false);
+      }
     }
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
-  }, [isModalOpen]);
+  }, [isModalOpen, isVideoOpen]);
 
   function handleSave() {
     const trimmed = urlValue.trim();
@@ -57,7 +62,14 @@ export function MediaLinkButton({
           <>
             <button
               type="button"
-              onClick={() => window.open(mediaUrl, "_blank", "noopener,noreferrer")}
+              onClick={() => {
+                const embed = getEmbedInfo(mediaUrl);
+                if (embed) {
+                  setIsVideoOpen(true);
+                } else {
+                  window.open(mediaUrl, "_blank", "noopener,noreferrer");
+                }
+              }}
               className="flex items-center text-primary hover:text-primary-hover transition-colors duration-200"
               aria-label="Open media link"
             >
@@ -217,6 +229,57 @@ export function MediaLinkButton({
           </div>
         </div>
       )}
+
+      {isVideoOpen && (() => {
+        const embed = getEmbedInfo(mediaUrl);
+        if (!embed) return null;
+        return (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsVideoOpen(false);
+            }}
+          >
+            <div
+              className="bg-surface-card rounded-2xl shadow-2xl max-w-3xl w-full mx-4 border border-edge overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between px-4 py-3 border-b border-edge">
+                <span className="text-sm text-ink-secondary truncate mr-4">{mediaUrl}</span>
+                <button
+                  type="button"
+                  onClick={() => setIsVideoOpen(false)}
+                  className="shrink-0 p-1 rounded-lg text-ink-faint hover:text-ink hover:bg-surface-hover transition-colors duration-200"
+                  aria-label="Close video preview"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="aspect-video w-full bg-black">
+                <iframe
+                  src={embed.embedUrl}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <div className="px-4 py-3 border-t border-edge">
+                <a
+                  href={mediaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-primary hover:text-primary-hover transition-colors duration-200"
+                >
+                  Open in new tab &#8599;
+                </a>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </>
   );
 }
