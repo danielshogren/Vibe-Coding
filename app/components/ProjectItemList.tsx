@@ -5,6 +5,7 @@ import { StatusBadge } from "./StatusBadge";
 import { DeleteButton } from "./DeleteButton";
 import { EditableField } from "./EditableField";
 import { FileLinkButton } from "./FileLinkButton";
+import { MediaLinkButton } from "./MediaLinkButton";
 
 /**
  * Renders a flat list of project item cards sorted by date.
@@ -76,6 +77,7 @@ export function ProjectItemList({
               {!selectionMode && (
                 <div className="flex items-center gap-1 shrink-0">
                   <StatusBadge itemId={item.id} currentStatus={item.status} />
+                  <MediaLinkButton itemId={item.id} mediaUrl={item.mediaUrl ?? ""} />
                   <DeleteButton itemId={item.id} />
                 </div>
               )}

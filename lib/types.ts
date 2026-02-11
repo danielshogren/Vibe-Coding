@@ -19,4 +19,5 @@ export interface ProjectItem {
   date: string;
   archived: boolean;
   fileUrl: string;
+  mediaUrl: string;
 }

@@ -39,7 +39,7 @@ export async function updateProjectItemStatus(id: string, status: ProjectItemSta
  */
 export async function updateProjectItemField(
   id: string,
-  field: "title" | "notes" | "fileUrl",
+  field: "title" | "notes" | "fileUrl" | "mediaUrl",
   value: string
 ) {
   storeUpdateField(id, field, value);
