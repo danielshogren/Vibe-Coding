@@ -55,7 +55,7 @@ export function MediaLinkButton({
   return (
     <>
       <div
-        className="group/media flex items-center gap-1 shrink-0"
+        className="group/media flex items-center gap-1.5 shrink-0"
         onClick={(e) => e.stopPropagation()}
       >
         {hasLink ? (
@@ -70,7 +70,7 @@ export function MediaLinkButton({
                   window.open(mediaUrl, "_blank", "noopener,noreferrer");
                 }
               }}
-              className="flex items-center text-primary hover:text-primary-hover transition-colors duration-200"
+              className="flex items-center gap-1.5 text-primary hover:text-primary-hover transition-colors duration-200"
               aria-label="Open media link"
             >
               <svg
@@ -90,6 +90,7 @@ export function MediaLinkButton({
                   d="M10 8.5v7l5.5-3.5L10 8.5Z"
                 />
               </svg>
+              <span className="text-xs font-medium">REVIEW</span>
             </button>
             <button
               type="button"
@@ -123,7 +124,7 @@ export function MediaLinkButton({
               setUrlValue("");
               setIsModalOpen(true);
             }}
-            className="flex items-center text-ink-faint hover:text-ink-muted transition-colors duration-200"
+            className="flex items-center gap-1.5 text-ink-faint hover:text-ink-muted transition-colors duration-200"
             aria-label="Add media link"
           >
             <svg
@@ -151,6 +152,7 @@ export function MediaLinkButton({
                 d="M18 15.5v3M16.5 17h3"
               />
             </svg>
+            <span className="text-xs font-medium">REVIEW</span>
           </button>
         )}
       </div>

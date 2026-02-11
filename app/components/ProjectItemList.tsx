@@ -77,7 +77,6 @@ export function ProjectItemList({
               {!selectionMode && (
                 <div className="flex items-center gap-1 shrink-0">
                   <StatusBadge itemId={item.id} currentStatus={item.status} />
-                  <MediaLinkButton itemId={item.id} mediaUrl={item.mediaUrl ?? ""} />
                   <DeleteButton itemId={item.id} />
                 </div>
               )}
@@ -103,6 +102,7 @@ export function ProjectItemList({
                 emptyClassName={isHighlighted ? "text-sm text-highlight-muted italic" : "text-sm text-ink-faint italic"}
               />
               <FileLinkButton itemId={item.id} fileUrl={item.fileUrl ?? ""} />
+              <MediaLinkButton itemId={item.id} mediaUrl={item.mediaUrl ?? ""} />
             </div>
           </section>
         );
