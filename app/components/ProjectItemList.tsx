@@ -2,6 +2,7 @@
 
 import type { ProjectItem } from "@/lib/types";
 import { StatusBadge } from "./StatusBadge";
+import { PriorityBadge } from "./PriorityBadge";
 import { DeleteButton } from "./DeleteButton";
 import { EditableField } from "./EditableField";
 import { FileLinkButton } from "./FileLinkButton";
@@ -64,6 +65,9 @@ export function ProjectItemList({
                     onClick={(e) => e.stopPropagation()}
                     className="w-4 h-4 rounded border-edge-strong text-accent focus:ring-accent shrink-0"
                   />
+                )}
+                {!selectionMode && (
+                  <PriorityBadge itemId={item.id} currentPriority={item.priority} />
                 )}
                 <EditableField
                   itemId={item.id}

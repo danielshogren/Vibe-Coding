@@ -29,6 +29,20 @@ export function addProjectItem(input: Omit<ProjectItem, "id" | "archived" | "fil
 }
 
 /**
+ * Update the priority of an existing project item.
+ * Returns the updated item, or null if not found.
+ */
+export function updateProjectItemPriority(
+  id: string,
+  priority: ProjectItem["priority"]
+): ProjectItem | null {
+  const item = items.find((i) => i.id === id);
+  if (!item) return null;
+  item.priority = priority;
+  return item;
+}
+
+/**
  * Return all project items, sorted by date ascending, then by title.
  * Used by the list view to group and display items.
  */

@@ -1,8 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { addProjectItem, updateProjectItemStatus as storeUpdateStatus, updateProjectItemField as storeUpdateField, deleteProjectItem as storeDeleteItem, deleteProjectItems as storeDeleteItems, archiveProjectItems as storeArchiveItems, unarchiveProjectItem as storeUnarchiveItem } from "@/lib/store";
-import type { ProjectItemStatus } from "@/lib/types";
+import { addProjectItem, updateProjectItemStatus as storeUpdateStatus, updateProjectItemPriority as storeUpdatePriority, updateProjectItemField as storeUpdateField, deleteProjectItem as storeDeleteItem, deleteProjectItems as storeDeleteItems, archiveProjectItems as storeArchiveItems, unarchiveProjectItem as storeUnarchiveItem } from "@/lib/store";
+import type { ProjectItemStatus, ProjectItemPriority } from "@/lib/types";
 
 /**
  * Server action: creates a new project item from form data and revalidates the home page.
@@ -12,6 +12,7 @@ export async function createProjectItem(formData: FormData) {
   const title = (formData.get("title") as string)?.trim();
   const notes = (formData.get("notes") as string)?.trim() ?? "";
   const status = (formData.get("status") as ProjectItemStatus) ?? "backlog";
+  const priority = (formData.get("priority") as ProjectItemPriority) ?? "medium";
   const date = (formData.get("date") as string) ?? "";
 
   if (!title) return; // minimal validation: require title
@@ -20,6 +21,7 @@ export async function createProjectItem(formData: FormData) {
     title,
     notes,
     status,
+    priority,
     date: date || new Date().toISOString().slice(0, 10),
   });
 
@@ -31,6 +33,14 @@ export async function createProjectItem(formData: FormData) {
  */
 export async function updateProjectItemStatus(id: string, status: ProjectItemStatus) {
   storeUpdateStatus(id, status);
+  revalidatePath("/");
+}
+
+/**
+ * Server action: updates the priority of an existing project item.
+ */
+export async function updateProjectItemPriority(id: string, priority: ProjectItemPriority) {
+  storeUpdatePriority(id, priority);
   revalidatePath("/");
 }
 

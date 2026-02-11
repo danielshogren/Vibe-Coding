@@ -42,6 +42,23 @@ export function ProjectItemForm() {
       </div>
 
       <div className="flex flex-col gap-1">
+        <label htmlFor="priority" className="text-sm font-medium text-ink-secondary">
+          Priority
+        </label>
+        <select
+          id="priority"
+          name="priority"
+          defaultValue="medium"
+          className="px-3 py-2 border border-edge-strong rounded-md bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary"
+        >
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="urgent">Urgent</option>
+        </select>
+      </div>
+
+      <div className="flex flex-col gap-1">
         <label htmlFor="notes" className="text-sm font-medium text-ink-secondary">
           Notes
         </label>

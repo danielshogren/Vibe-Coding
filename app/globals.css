@@ -66,6 +66,26 @@
   --status-done: 220 252 231;
   --status-done-text: 21 128 61;
   --status-done-dot: 34 197 94;
+
+  /* Priority: Low */
+  --priority-low: 243 244 246;
+  --priority-low-text: 107 114 128;
+  --priority-low-dot: 156 163 175;
+
+  /* Priority: Medium */
+  --priority-medium: 219 234 254;
+  --priority-medium-text: 29 78 216;
+  --priority-medium-dot: 59 130 246;
+
+  /* Priority: High */
+  --priority-high: 254 243 199;
+  --priority-high-text: 180 83 9;
+  --priority-high-dot: 245 158 11;
+
+  /* Priority: Urgent */
+  --priority-urgent: 254 226 226;
+  --priority-urgent-text: 185 28 28;
+  --priority-urgent-dot: 220 38 38;
 }
 
 [data-theme="dark"] {
@@ -132,4 +152,24 @@
   --status-done: 20 50 30;
   --status-done-text: 100 180 120;
   --status-done-dot: 80 160 100;
+
+  /* Priority: Low */
+  --priority-low: 37 43 59;
+  --priority-low-text: 155 163 184;
+  --priority-low-dot: 107 115 137;
+
+  /* Priority: Medium */
+  --priority-medium: 25 40 70;
+  --priority-medium-text: 120 165 215;
+  --priority-medium-dot: 91 141 198;
+
+  /* Priority: High */
+  --priority-high: 55 45 20;
+  --priority-high-text: 201 168 76;
+  --priority-high-dot: 201 168 76;
+
+  /* Priority: Urgent */
+  --priority-urgent: 60 30 35;
+  --priority-urgent-text: 220 120 130;
+  --priority-urgent-dot: 196 96 106;
 }

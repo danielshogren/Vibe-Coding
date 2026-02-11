@@ -71,6 +71,26 @@ const config: Config = {
           text: "rgb(var(--status-done-text) / <alpha-value>)",
           dot: "rgb(var(--status-done-dot) / <alpha-value>)",
         },
+        "priority-low": {
+          DEFAULT: "rgb(var(--priority-low) / <alpha-value>)",
+          text: "rgb(var(--priority-low-text) / <alpha-value>)",
+          dot: "rgb(var(--priority-low-dot) / <alpha-value>)",
+        },
+        "priority-medium": {
+          DEFAULT: "rgb(var(--priority-medium) / <alpha-value>)",
+          text: "rgb(var(--priority-medium-text) / <alpha-value>)",
+          dot: "rgb(var(--priority-medium-dot) / <alpha-value>)",
+        },
+        "priority-high": {
+          DEFAULT: "rgb(var(--priority-high) / <alpha-value>)",
+          text: "rgb(var(--priority-high-text) / <alpha-value>)",
+          dot: "rgb(var(--priority-high-dot) / <alpha-value>)",
+        },
+        "priority-urgent": {
+          DEFAULT: "rgb(var(--priority-urgent) / <alpha-value>)",
+          text: "rgb(var(--priority-urgent-text) / <alpha-value>)",
+          dot: "rgb(var(--priority-urgent-dot) / <alpha-value>)",
+        },
       },
     },
   },

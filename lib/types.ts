@@ -5,6 +5,11 @@
 export type ProjectItemStatus = "backlog" | "in_progress" | "stuck" | "done";
 
 /**
+ * Priority level for a project item.
+ */
+export type ProjectItemPriority = "low" | "medium" | "high" | "urgent";
+
+/**
  * Single project item in our data model.
  * id: unique identifier (generated when created)
  * title: user-facing name
@@ -16,6 +21,7 @@ export interface ProjectItem {
   title: string;
   notes: string;
   status: ProjectItemStatus;
+  priority: ProjectItemPriority;
   date: string;
   archived: boolean;
   fileUrl: string;
