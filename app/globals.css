@@ -67,25 +67,25 @@
   --status-done-text: 21 128 61;
   --status-done-dot: 34 197 94;
 
-  /* Priority: Low */
-  --priority-low: 243 244 246;
-  --priority-low-text: 107 114 128;
-  --priority-low-dot: 156 163 175;
+  /* Priority: Low — icy cyan */
+  --priority-low: 220 240 250;
+  --priority-low-text: 15 100 140;
+  --priority-low-dot: 56 189 248;
 
-  /* Priority: Medium */
-  --priority-medium: 219 234 254;
-  --priority-medium-text: 29 78 216;
-  --priority-medium-dot: 59 130 246;
+  /* Priority: Medium — teal */
+  --priority-medium: 204 251 241;
+  --priority-medium-text: 17 94 89;
+  --priority-medium-dot: 20 184 166;
 
-  /* Priority: High */
-  --priority-high: 254 243 199;
-  --priority-high-text: 180 83 9;
-  --priority-high-dot: 245 158 11;
+  /* Priority: High — orange */
+  --priority-high: 255 237 213;
+  --priority-high-text: 194 65 12;
+  --priority-high-dot: 249 115 22;
 
-  /* Priority: Urgent */
-  --priority-urgent: 254 226 226;
+  /* Priority: Urgent — vivid red */
+  --priority-urgent: 254 212 212;
   --priority-urgent-text: 185 28 28;
-  --priority-urgent-dot: 220 38 38;
+  --priority-urgent-dot: 239 68 68;
 }
 
 [data-theme="dark"] {
@@ -153,23 +153,23 @@
   --status-done-text: 100 180 120;
   --status-done-dot: 80 160 100;
 
-  /* Priority: Low */
-  --priority-low: 37 43 59;
-  --priority-low-text: 155 163 184;
-  --priority-low-dot: 107 115 137;
+  /* Priority: Low — icy cyan */
+  --priority-low: 15 35 50;
+  --priority-low-text: 125 210 245;
+  --priority-low-dot: 56 189 248;
 
-  /* Priority: Medium */
-  --priority-medium: 25 40 70;
-  --priority-medium-text: 120 165 215;
-  --priority-medium-dot: 91 141 198;
+  /* Priority: Medium — teal */
+  --priority-medium: 15 45 40;
+  --priority-medium-text: 94 234 212;
+  --priority-medium-dot: 45 212 191;
 
-  /* Priority: High */
-  --priority-high: 55 45 20;
-  --priority-high-text: 201 168 76;
-  --priority-high-dot: 201 168 76;
+  /* Priority: High — orange */
+  --priority-high: 55 30 10;
+  --priority-high-text: 251 146 60;
+  --priority-high-dot: 249 115 22;
 
-  /* Priority: Urgent */
-  --priority-urgent: 60 30 35;
-  --priority-urgent-text: 220 120 130;
-  --priority-urgent-dot: 196 96 106;
+  /* Priority: Urgent — vivid red */
+  --priority-urgent: 60 18 22;
+  --priority-urgent-text: 248 113 113;
+  --priority-urgent-dot: 239 68 68;
 }
