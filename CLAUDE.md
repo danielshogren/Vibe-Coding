@@ -3,6 +3,7 @@
 ## Stack
 - Next.js 15.5.12, React, TypeScript
 - Dev server: `npm run dev` on localhost:3000
+- LAN access: `http://192.168.50.156:3000` (requires firewall rule below)
 
 ## Theme System
 Two themes: **Metropolis** (light) and **Bond** (dark), toggled via the settings gear icon.
@@ -34,3 +35,11 @@ Never hardcode Tailwind color classes (`gray-*`, `blue-*`, `red-*`, `amber-*`, `
 
 ## Troubleshooting
 - **Corrupted `.next` cache**: Delete the `.next` directory and restart the dev server.
+- **LAN access blocked**: A Windows Firewall inbound rule is needed for TCP port 3000. Add it (elevated terminal):
+  ```
+  netsh advfirewall firewall add rule name="Next.js Dev Server" dir=in action=allow protocol=TCP localport=3000
+  ```
+  Remove it when no longer needed:
+  ```
+  netsh advfirewall firewall delete rule name="Next.js Dev Server"
+  ```
