@@ -247,7 +247,7 @@ function ProjectCard({
           onAnimationEnd={() => setPulsing(false)}
           className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-colors duration-200 ${
             isApproved
-              ? "bg-approved-text/15 text-approved-text"
+              ? "bg-approved-glow/15 text-approved-glow"
               : "bg-surface-hover text-ink-muted hover:text-ink-secondary"
           } ${approvedBtnGlow}`}
         >

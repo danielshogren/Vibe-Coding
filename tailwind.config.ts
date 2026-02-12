@@ -96,6 +96,7 @@ const config: Config = {
           elevated: "rgb(var(--approved-elevated) / <alpha-value>)",
           border: "rgb(var(--approved-border) / <alpha-value>)",
           text: "rgb(var(--approved-text) / <alpha-value>)",
+          glow: "rgb(var(--approved-glow) / <alpha-value>)",
         },
         completed: {
           DEFAULT: "rgb(var(--completed-bg) / <alpha-value>)",
