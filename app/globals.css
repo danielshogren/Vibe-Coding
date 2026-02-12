@@ -2,6 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes approve-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  }
+  50% {
+    transform: scale(1.015);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  }
+}
+
+.animate-approve-pulse {
+  animation: approve-pulse 600ms ease-out;
+}
+
+@keyframes complete-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 6px rgba(var(--completed-glow) / 0.2);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(var(--completed-glow) / 0.6);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 12px rgba(var(--completed-glow) / 0.25);
+  }
+}
+
+.animate-complete-pulse {
+  animation: complete-pulse 800ms ease-out;
+}
+
+.completed-glow {
+  box-shadow: 0 0 12px rgba(var(--completed-glow) / 0.25);
+}
+
 :root {
   /* Surface */
   --surface: 247 243 235;
@@ -86,6 +128,19 @@
   --priority-urgent: 254 212 212;
   --priority-urgent-text: 185 28 28;
   --priority-urgent-dot: 239 68 68;
+
+  /* Approved */
+  --approved-bg: 230 245 233;
+  --approved-elevated: 215 235 218;
+  --approved-border: 180 220 190;
+  --approved-text: 27 94 32;
+
+  /* Completed */
+  --completed-bg: 232 248 235;
+  --completed-elevated: 218 240 222;
+  --completed-border: 170 215 180;
+  --completed-text: 22 101 52;
+  --completed-glow: 34 197 94;
 }
 
 [data-theme="dark"] {
@@ -172,4 +227,17 @@
   --priority-urgent: 60 18 22;
   --priority-urgent-text: 248 113 113;
   --priority-urgent-dot: 239 68 68;
+
+  /* Approved */
+  --approved-bg: 20 40 28;
+  --approved-elevated: 25 48 33;
+  --approved-border: 40 75 50;
+  --approved-text: 130 200 140;
+
+  /* Completed */
+  --completed-bg: 18 38 25;
+  --completed-elevated: 22 45 30;
+  --completed-border: 35 70 45;
+  --completed-text: 110 200 130;
+  --completed-glow: 80 160 100;
 }

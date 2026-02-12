@@ -26,4 +26,6 @@ export interface ProjectItem {
   archived: boolean;
   fileUrl: string;
   mediaUrl: string;
+  approved: boolean;
+  completed: boolean;
 }

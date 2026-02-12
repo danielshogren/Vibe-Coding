@@ -1,4 +1,4 @@
-import { getActiveProjectItems, getArchivedProjectItems } from "@/lib/store";
+import { getActiveProjectItems, getArchivedProjectItems, getCompletedProjectItems } from "@/lib/store";
 import { ProjectItemForm } from "@/app/components/ProjectItemForm";
 import { ProjectCalendarView } from "@/app/components/ProjectCalendarView";
 import { SettingsButton } from "@/app/components/SettingsButton";
@@ -10,6 +10,7 @@ import { SettingsButton } from "@/app/components/SettingsButton";
 export default async function Home() {
   const activeItems = getActiveProjectItems();
   const archivedItems = getArchivedProjectItems();
+  const completedItems = getCompletedProjectItems();
 
   // Build counts map for calendar dots (active items only)
   const itemCountsByDate: Record<string, number> = {};
@@ -30,7 +31,7 @@ export default async function Home() {
 
       {/* Scrollable content below */}
       <div className="px-6 pb-6 pt-6">
-        <ProjectCalendarView items={activeItems} itemCountsByDate={itemCountsByDate} archivedItems={archivedItems} />
+        <ProjectCalendarView items={activeItems} itemCountsByDate={itemCountsByDate} archivedItems={archivedItems} completedItems={completedItems} />
       </div>
     </main>
   );

@@ -5,15 +5,17 @@ import type { ProjectItem } from "@/lib/types";
 import { ProjectItemList } from "./ProjectItemList";
 import { Calendar } from "./Calendar";
 import { ArchivedSection } from "./ArchivedSection";
+import { CompletedSection } from "./CompletedSection";
 import { archiveProjectItems, deleteProjectItems } from "@/app/actions";
 
 interface ProjectCalendarViewProps {
   items: ProjectItem[];
   itemCountsByDate: Record<string, number>;
   archivedItems: ProjectItem[];
+  completedItems: ProjectItem[];
 }
 
-export function ProjectCalendarView({ items, itemCountsByDate, archivedItems }: ProjectCalendarViewProps) {
+export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, completedItems }: ProjectCalendarViewProps) {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -31,6 +33,12 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems }: 
 
   // Filter archived items to match the calendar's displayed month
   const filteredArchived = archivedItems.filter((item) => {
+    const [y, m] = item.date.split("-").map(Number);
+    return y === viewYear && m === viewMonth + 1;
+  });
+
+  // Filter completed items to match the calendar's displayed month
+  const filteredCompleted = completedItems.filter((item) => {
     const [y, m] = item.date.split("-").map(Number);
     return y === viewYear && m === viewMonth + 1;
   });
@@ -166,6 +174,7 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems }: 
           viewMonth={viewMonth}
           onMonthChange={handleMonthChange}
         />
+        <CompletedSection items={filteredCompleted} />
         <ArchivedSection items={filteredArchived} />
       </div>
       {showDeleteConfirm && (

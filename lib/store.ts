@@ -16,13 +16,15 @@ function generateId(): string {
  * Add a new project item to the store.
  * Returns the created item (with id set).
  */
-export function addProjectItem(input: Omit<ProjectItem, "id" | "archived" | "fileUrl" | "mediaUrl">): ProjectItem {
+export function addProjectItem(input: Omit<ProjectItem, "id" | "archived" | "fileUrl" | "mediaUrl" | "approved" | "completed">): ProjectItem {
   const item: ProjectItem = {
     ...input,
     id: generateId(),
     archived: false,
     fileUrl: "",
     mediaUrl: "",
+    approved: false,
+    completed: false,
   };
   items.push(item);
   return item;
@@ -94,10 +96,10 @@ export function getAllProjectItems(): ProjectItem[] {
   });
 }
 
-/** Return only non-archived items, sorted by date then title. */
+/** Return only non-archived, non-completed items, sorted by date then title. */
 export function getActiveProjectItems(): ProjectItem[] {
   return items
-    .filter((i) => !i.archived)
+    .filter((i) => !i.archived && !i.completed)
     .sort((a, b) => {
       const dateCompare = a.date.localeCompare(b.date);
       if (dateCompare !== 0) return dateCompare;
@@ -136,10 +138,45 @@ export function deleteProjectItems(ids: string[]): void {
   }
 }
 
+/** Toggle the approved state of a project item. */
+export function toggleProjectItemApproved(id: string): void {
+  const item = items.find((i) => i.id === id);
+  if (item) {
+    item.approved = !item.approved;
+  }
+}
+
 /** Restore a single archived item by setting archived = false. */
 export function unarchiveProjectItem(id: string): void {
   const item = items.find((i) => i.id === id);
   if (item) {
     item.archived = false;
   }
+}
+
+/** Toggle the completed state of a project item. */
+export function toggleProjectItemCompleted(id: string): void {
+  const item = items.find((i) => i.id === id);
+  if (item) {
+    item.completed = !item.completed;
+  }
+}
+
+/** Restore a completed item by setting completed = false. */
+export function uncompleteProjectItem(id: string): void {
+  const item = items.find((i) => i.id === id);
+  if (item) {
+    item.completed = false;
+  }
+}
+
+/** Return only completed (non-archived) items, sorted by date then title. */
+export function getCompletedProjectItems(): ProjectItem[] {
+  return items
+    .filter((i) => i.completed && !i.archived)
+    .sort((a, b) => {
+      const dateCompare = a.date.localeCompare(b.date);
+      if (dateCompare !== 0) return dateCompare;
+      return a.title.localeCompare(b.title, undefined, { numeric: true });
+    });
 }

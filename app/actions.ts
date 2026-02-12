@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { addProjectItem, updateProjectItemStatus as storeUpdateStatus, updateProjectItemPriority as storeUpdatePriority, updateProjectItemField as storeUpdateField, deleteProjectItem as storeDeleteItem, deleteProjectItems as storeDeleteItems, archiveProjectItems as storeArchiveItems, unarchiveProjectItem as storeUnarchiveItem } from "@/lib/store";
+import { addProjectItem, updateProjectItemStatus as storeUpdateStatus, updateProjectItemPriority as storeUpdatePriority, updateProjectItemField as storeUpdateField, deleteProjectItem as storeDeleteItem, deleteProjectItems as storeDeleteItems, archiveProjectItems as storeArchiveItems, unarchiveProjectItem as storeUnarchiveItem, toggleProjectItemApproved as storeToggleApproved, toggleProjectItemCompleted as storeToggleCompleted, uncompleteProjectItem as storeUncomplete } from "@/lib/store";
 import type { ProjectItemStatus, ProjectItemPriority } from "@/lib/types";
 
 /**
@@ -85,5 +85,29 @@ export async function archiveProjectItems(ids: string[]) {
  */
 export async function unarchiveProjectItem(id: string) {
   storeUnarchiveItem(id);
+  revalidatePath("/");
+}
+
+/**
+ * Server action: toggles the approved state of a project item.
+ */
+export async function toggleProjectItemApproved(id: string) {
+  storeToggleApproved(id);
+  revalidatePath("/");
+}
+
+/**
+ * Server action: toggles the completed state of a project item.
+ */
+export async function toggleProjectItemCompleted(id: string) {
+  storeToggleCompleted(id);
+  revalidatePath("/");
+}
+
+/**
+ * Server action: restores a completed project item back to active.
+ */
+export async function uncompleteProjectItem(id: string) {
+  storeUncomplete(id);
   revalidatePath("/");
 }
