@@ -9,7 +9,7 @@ import { EditableField } from "./EditableField";
 import { FileLinkButton } from "./FileLinkButton";
 import { MediaLinkButton } from "./MediaLinkButton";
 import { toggleProjectItemApproved, toggleProjectItemCompleted } from "@/app/actions";
-import { playCompleteSound } from "@/app/utils/completeSound";
+import { playCompleteSound, playApprovedSound } from "@/app/utils/completeSound";
 
 /**
  * Renders a flat list of project item cards sorted by date.
@@ -77,6 +77,7 @@ function ProjectCard({
   function handleToggleApproved() {
     if (!isApproved) {
       setPulsing(true);
+      playApprovedSound();
     }
     toggleProjectItemApproved(item.id);
   }
@@ -90,7 +91,6 @@ function ProjectCard({
   }
 
   function handleAnimationEnd() {
-    setPulsing(false);
     setCompletePulsing(false);
   }
 
@@ -100,8 +100,6 @@ function ProjectCard({
     borderClass = "border-accent-border ring-2 ring-accent-ring";
   } else if (isCompleted) {
     borderClass = "border-completed-border";
-  } else if (isApproved) {
-    borderClass = "border-approved-border";
   } else {
     borderClass = "border-edge";
   }
@@ -112,8 +110,6 @@ function ProjectCard({
     headerBgClass = "bg-highlight";
   } else if (isCompleted) {
     headerBgClass = "bg-completed-elevated";
-  } else if (isApproved) {
-    headerBgClass = "bg-approved-elevated";
   } else {
     headerBgClass = "bg-surface-elevated";
   }
@@ -124,8 +120,6 @@ function ProjectCard({
     bodyBgClass = "bg-highlight-subtle";
   } else if (isCompleted) {
     bodyBgClass = "bg-completed";
-  } else if (isApproved) {
-    bodyBgClass = "bg-approved";
   } else {
     bodyBgClass = "";
   }
@@ -134,8 +128,6 @@ function ProjectCard({
   let bottomBgClass: string;
   if (isCompleted) {
     bottomBgClass = "bg-completed-elevated";
-  } else if (isApproved) {
-    bottomBgClass = "bg-approved-elevated";
   } else {
     bottomBgClass = "bg-surface-elevated";
   }
@@ -144,10 +136,16 @@ function ProjectCard({
   let animationClass = "";
   if (completePulsing) {
     animationClass = "animate-complete-pulse";
-  } else if (pulsing) {
-    animationClass = "animate-approve-pulse";
   } else if (isCompleted) {
     animationClass = "completed-glow";
+  }
+
+  // Approved button animation/glow classes
+  let approvedBtnGlow = "";
+  if (pulsing) {
+    approvedBtnGlow = "animate-approve-pulse";
+  } else if (isApproved) {
+    approvedBtnGlow = "approved-glow";
   }
 
   return (
@@ -246,11 +244,12 @@ function ProjectCard({
             e.stopPropagation();
             handleToggleApproved();
           }}
+          onAnimationEnd={() => setPulsing(false)}
           className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-colors duration-200 ${
             isApproved
               ? "bg-approved-text/15 text-approved-text"
               : "bg-surface-hover text-ink-muted hover:text-ink-secondary"
-          }`}
+          } ${approvedBtnGlow}`}
         >
           {isApproved && (
             <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
