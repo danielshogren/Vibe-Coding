@@ -153,7 +153,7 @@ function ProjectCard({
   return (
     <section
       ref={cardRef}
-      className={`bg-surface-card rounded-lg border shadow-sm ${borderClass} ${animationClass} ${isCompleted ? "opacity-70" : ""}`}
+      className={`bg-surface-card rounded-lg border shadow-sm ${borderClass} ${animationClass}`}
       onClick={selectionMode ? () => onToggleSelect?.(item.id) : undefined}
       style={selectionMode ? { cursor: "pointer" } : undefined}
       onAnimationEnd={handleAnimationEnd}
@@ -223,10 +223,10 @@ function ProjectCard({
             e.stopPropagation();
             handleToggleCompleted();
           }}
-          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-colors duration-200 ${
+          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 ${
             isCompleted
-              ? "bg-completed-text/15 text-completed-text"
-              : "bg-surface-hover text-ink-muted hover:text-ink-secondary"
+              ? "bg-completed-text/15 text-completed-text scale-110"
+              : "bg-surface-hover text-ink-muted hover:text-ink-secondary hover:scale-105 active:scale-95"
           }`}
         >
           {isCompleted ? (

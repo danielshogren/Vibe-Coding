@@ -99,7 +99,7 @@ export function getAllProjectItems(): ProjectItem[] {
 /** Return only non-archived, non-completed items, sorted by date then title. */
 export function getActiveProjectItems(): ProjectItem[] {
   return items
-    .filter((i) => !i.archived && !i.completed)
+    .filter((i) => !i.archived)
     .sort((a, b) => {
       const dateCompare = a.date.localeCompare(b.date);
       if (dateCompare !== 0) return dateCompare;
