@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 import type { ProjectItem } from "@/lib/types";
 import { ProjectItemList } from "./ProjectItemList";
 import { Calendar } from "./Calendar";
@@ -25,6 +25,28 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, co
   const now = new Date();
   const [viewYear, setViewYear] = useState(now.getFullYear());
   const [viewMonth, setViewMonth] = useState(now.getMonth());
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollUp, setCanScrollUp] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(false);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    function update() {
+      if (!el) return;
+      setCanScrollUp(el.scrollTop > 0);
+      setCanScrollDown(el.scrollTop + el.clientHeight < el.scrollHeight - 1);
+    }
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener("scroll", update);
+      ro.disconnect();
+    };
+  }, []);
 
   function handleMonthChange(year: number, month: number) {
     setViewYear(year);
@@ -102,11 +124,11 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, co
   }
 
   return (
-    <div className="flex flex-col lg:flex-row lg:gap-8">
+    <div className="flex flex-col lg:flex-row lg:gap-8 h-full">
       {/* Left column: list */}
-      <div className="flex-1 min-w-0">
-        {/* Selection toolbar */}
-        <div className="flex items-center gap-2 mb-4">
+      <div className="flex-1 min-w-0 flex flex-col">
+        {/* Selection toolbar — never scrolls */}
+        <div className="flex items-center gap-2 mb-4 flex-shrink-0">
           {!selectionMode ? (
             <button
               onClick={() => setSelectionMode(true)}
@@ -155,17 +177,31 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, co
           )}
         </div>
 
-        <ProjectItemList
-          items={items}
-          selectedDate={selectedDate}
-          selectionMode={selectionMode}
-          selectedIds={selectedIds}
-          onToggleSelect={handleToggleSelect}
-        />
+        {/* Scrollable project list with fade edges */}
+        <div className="relative flex-1 min-h-0">
+          {/* Top fade + blur */}
+          <div className={`absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-surface to-surface/0 backdrop-blur-sm z-10 pointer-events-none rounded-t-lg transition-opacity duration-200 ${canScrollUp ? 'opacity-100' : 'opacity-0'}`} />
+
+          {/* Scrollable area */}
+          <div ref={scrollRef} className="overflow-y-auto h-full pb-6">
+            <div className="pt-2">
+              <ProjectItemList
+                items={items}
+                selectedDate={selectedDate}
+                selectionMode={selectionMode}
+                selectedIds={selectedIds}
+                onToggleSelect={handleToggleSelect}
+              />
+            </div>
+          </div>
+
+          {/* Bottom fade + blur */}
+          <div className={`absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-surface to-surface/0 backdrop-blur-sm z-10 pointer-events-none rounded-b-lg transition-opacity duration-200 ${canScrollDown ? 'opacity-100' : 'opacity-0'}`} />
+        </div>
       </div>
 
-      {/* Right column: calendar + archived */}
-      <div className="lg:w-80 lg:flex-shrink-0 mt-8 lg:mt-0 lg:sticky lg:top-52 lg:self-start lg:max-h-[calc(100vh-14rem)] lg:overflow-y-auto">
+      {/* Right column: calendar + completed + archived */}
+      <div className="lg:w-80 lg:flex-shrink-0 mt-8 lg:mt-0 lg:overflow-y-auto">
         <Calendar
           itemCountsByDate={itemCountsByDate}
           selectedDate={selectedDate}

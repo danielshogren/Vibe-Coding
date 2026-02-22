@@ -20,9 +20,9 @@ export default async function Home() {
   }
 
   return (
-    <main className="max-w-5xl mx-auto px-6 pt-6">
-      {/* Header card */}
-      <div className="bg-surface-card rounded-xl shadow-sm border border-edge p-6 mb-6">
+    <main className="max-w-5xl mx-auto px-6 pt-6 h-screen flex flex-col overflow-hidden">
+      {/* Header card — fixed, never scrolls */}
+      <div className="bg-surface-card rounded-xl shadow-sm border border-edge p-6 mb-6 flex-shrink-0">
         <div className="flex items-center justify-between mb-4">
           <EditableTitle />
           <SettingsButton />
@@ -32,8 +32,8 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Content */}
-      <div className="pb-6">
+      {/* Content — fills remaining height */}
+      <div className="flex-1 min-h-0 pb-6">
         <ProjectCalendarView items={activeItems} itemCountsByDate={itemCountsByDate} archivedItems={archivedItems} completedItems={completedItems} />
       </div>
     </main>
