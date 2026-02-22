@@ -26,26 +26,46 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, co
   const [viewYear, setViewYear] = useState(now.getFullYear());
   const [viewMonth, setViewMonth] = useState(now.getMonth());
 
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const topSentinelRef = useRef<HTMLDivElement>(null);
+  const bottomSentinelRef = useRef<HTMLDivElement>(null);
   const [canScrollUp, setCanScrollUp] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(0);
 
+  // Measure sticky header height
   useEffect(() => {
-    const el = scrollRef.current;
+    const header = document.querySelector("[data-header]");
+    if (!header) return;
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setHeaderHeight(entry.borderBoxSize?.[0]?.blockSize ?? entry.target.getBoundingClientRect().height);
+      }
+    });
+    ro.observe(header);
+    return () => ro.disconnect();
+  }, []);
+
+  // IntersectionObserver for top sentinel (scroll-up indicator)
+  useEffect(() => {
+    const el = topSentinelRef.current;
+    if (!el || headerHeight === 0) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setCanScrollUp(!entry.isIntersecting),
+      { rootMargin: `-${headerHeight}px 0px 0px 0px` }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [headerHeight]);
+
+  // IntersectionObserver for bottom sentinel (scroll-down indicator)
+  useEffect(() => {
+    const el = bottomSentinelRef.current;
     if (!el) return;
-    function update() {
-      if (!el) return;
-      setCanScrollUp(el.scrollTop > 0);
-      setCanScrollDown(el.scrollTop + el.clientHeight < el.scrollHeight - 1);
-    }
-    update();
-    el.addEventListener("scroll", update, { passive: true });
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-    return () => {
-      el.removeEventListener("scroll", update);
-      ro.disconnect();
-    };
+    const observer = new IntersectionObserver(
+      ([entry]) => setCanScrollDown(!entry.isIntersecting),
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   function handleMonthChange(year: number, month: number) {
@@ -124,11 +144,11 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, co
   }
 
   return (
-    <div className="flex flex-col lg:flex-row lg:gap-8 h-full">
+    <div className="flex flex-col lg:flex-row lg:gap-8">
       {/* Left column: list */}
-      <div className="flex-1 min-w-0 flex flex-col">
-        {/* Selection toolbar — never scrolls */}
-        <div className="flex items-center gap-2 mb-4 flex-shrink-0">
+      <div className="flex-1 min-w-0">
+        {/* Selection toolbar */}
+        <div className="flex items-center gap-2 mb-4">
           {!selectionMode ? (
             <button
               onClick={() => setSelectionMode(true)}
@@ -177,31 +197,38 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, co
           )}
         </div>
 
-        {/* Scrollable project list with fade edges */}
-        <div className="relative flex-1 min-h-0">
-          {/* Top fade */}
-          <div className={`absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-surface to-surface/0 z-10 pointer-events-none rounded-t-lg transition-opacity duration-200 ${canScrollUp ? 'opacity-100' : 'opacity-0'}`} />
+        {/* Top sentinel (for IntersectionObserver scroll detection) */}
+        <div ref={topSentinelRef} className="h-0" />
 
-          {/* Scrollable area */}
-          <div ref={scrollRef} className="overflow-y-auto h-full pb-6">
-            <div className="pt-2">
-              <ProjectItemList
-                items={items}
-                selectedDate={selectedDate}
-                selectionMode={selectionMode}
-                selectedIds={selectedIds}
-                onToggleSelect={handleToggleSelect}
-              />
-            </div>
-          </div>
+        {/* Top fade — sticky, overlaps content below */}
+        <div
+          className={`sticky z-10 -mb-8 h-8 bg-gradient-to-b from-surface to-surface/0 pointer-events-none transition-opacity duration-200 ${canScrollUp ? 'opacity-100' : 'opacity-0'}`}
+          style={{ top: `${headerHeight}px` }}
+        />
 
-          {/* Bottom fade */}
-          <div className={`absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-surface to-surface/0 z-10 pointer-events-none rounded-b-lg transition-opacity duration-200 ${canScrollDown ? 'opacity-100' : 'opacity-0'}`} />
+        {/* Project list — flows naturally in the page */}
+        <div className="pt-2">
+          <ProjectItemList
+            items={items}
+            selectedDate={selectedDate}
+            selectionMode={selectionMode}
+            selectedIds={selectedIds}
+            onToggleSelect={handleToggleSelect}
+          />
         </div>
+
+        {/* Bottom fade — sticky to bottom, overlaps content above */}
+        <div className={`sticky bottom-0 z-10 -mt-8 h-8 bg-gradient-to-t from-surface to-surface/0 pointer-events-none transition-opacity duration-200 ${canScrollDown ? 'opacity-100' : 'opacity-0'}`} />
+
+        {/* Bottom sentinel (for IntersectionObserver scroll detection) */}
+        <div ref={bottomSentinelRef} className="h-0" />
       </div>
 
-      {/* Right column: calendar + completed + archived */}
-      <div className="lg:w-80 lg:flex-shrink-0 mt-8 lg:mt-0 lg:overflow-y-auto">
+      {/* Right column: calendar + completed + archived — sticky sidebar on desktop */}
+      <div
+        className="lg:w-80 lg:flex-shrink-0 mt-8 lg:mt-0 lg:sticky lg:self-start lg:overflow-y-auto"
+        style={{ top: `${headerHeight}px`, maxHeight: headerHeight ? `calc(100vh - ${headerHeight}px)` : undefined }}
+      >
         <Calendar
           itemCountsByDate={itemCountsByDate}
           selectedDate={selectedDate}

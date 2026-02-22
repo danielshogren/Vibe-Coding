@@ -20,21 +20,24 @@ export default async function Home() {
   }
 
   return (
-    <main className="max-w-5xl mx-auto px-6 pt-6 h-screen flex flex-col overflow-hidden">
-      {/* Header card — fixed, never scrolls */}
-      <div className="bg-surface-card rounded-xl shadow-sm border border-edge p-6 mb-6 flex-shrink-0">
-        <div className="flex items-center justify-between mb-4">
-          <EditableTitle />
-          <SettingsButton />
+    <main className="h-screen overflow-y-auto">
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Sticky header — stays visible while scrolling */}
+        <div className="sticky top-0 z-30 bg-surface pt-6 pb-6" data-header>
+          <div className="bg-surface-card rounded-xl shadow-sm border border-edge p-6">
+            <div className="flex items-center justify-between mb-4">
+              <EditableTitle />
+              <SettingsButton />
+            </div>
+            <div className="bg-surface rounded-lg p-4">
+              <ProjectItemForm />
+            </div>
+          </div>
         </div>
-        <div className="bg-surface rounded-lg p-4">
-          <ProjectItemForm />
-        </div>
-      </div>
 
-      {/* Content — fills remaining height */}
-      <div className="flex-1 min-h-0 pb-6">
-        <ProjectCalendarView items={activeItems} itemCountsByDate={itemCountsByDate} archivedItems={archivedItems} completedItems={completedItems} />
+        <div className="pb-6">
+          <ProjectCalendarView items={activeItems} itemCountsByDate={itemCountsByDate} archivedItems={archivedItems} completedItems={completedItems} />
+        </div>
       </div>
     </main>
   );
