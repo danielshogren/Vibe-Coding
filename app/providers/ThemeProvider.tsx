@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "light" | "dark";
+type Theme = "light" | "dark" | "atomic";
 
 const ThemeContext = createContext<{
   theme: Theme;
@@ -14,7 +14,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const stored = localStorage.getItem("theme") as Theme | null;
-    const initial = stored === "dark" ? "dark" : "light";
+    const initial: Theme = stored === "dark" || stored === "atomic" ? stored : "light";
     setThemeState(initial);
     document.documentElement.setAttribute("data-theme", initial);
   }, []);

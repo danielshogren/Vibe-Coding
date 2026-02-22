@@ -244,3 +244,103 @@
   --completed-text: 110 200 130;
   --completed-glow: 80 160 100;
 }
+
+[data-theme="atomic"] {
+  /* Surface — near-black with amber warmth */
+  --surface: 13 10 0;
+  --surface-card: 22 18 5;
+  --surface-elevated: 35 28 10;
+  --surface-hover: 45 36 14;
+  --surface-input: 18 14 2;
+
+  /* Borders — dim amber */
+  --edge: 61 43 0;
+  --edge-strong: 82 60 5;
+
+  /* Text — orange-amber phosphor brightness tiers */
+  --ink: 255 147 15;
+  --ink-secondary: 180 105 15;
+  --ink-muted: 120 72 12;
+  --ink-faint: 75 45 8;
+
+  /* Primary — deep orange-amber */
+  --primary: 255 147 15;
+  --primary-hover: 230 128 10;
+  --primary-light: 40 30 5;
+  --primary-text: 255 165 35;
+
+  /* Danger — hotter orange-red */
+  --danger: 255 80 15;
+  --danger-hover: 220 60 8;
+  --danger-light: 50 20 5;
+  --danger-text: 255 100 35;
+
+  /* Accent — warm orange */
+  --accent: 255 170 25;
+  --accent-hover: 220 142 18;
+  --accent-border: 200 125 18;
+  --accent-ring: 80 55 10;
+
+  /* Highlight */
+  --highlight: 40 30 5;
+  --highlight-subtle: 30 22 3;
+  --highlight-text: 255 165 35;
+  --highlight-muted: 180 105 15;
+
+  /* Indicator */
+  --indicator: 255 147 15;
+
+  /* Status: Backlog — dim amber */
+  --status-backlog: 25 20 5;
+  --status-backlog-text: 140 85 12;
+  --status-backlog-dot: 100 60 8;
+
+  /* Status: In Progress — bright orange-amber */
+  --status-progress: 35 28 5;
+  --status-progress-text: 255 147 15;
+  --status-progress-dot: 255 147 15;
+
+  /* Status: Stuck — hot orange */
+  --status-stuck: 50 30 5;
+  --status-stuck-text: 255 115 25;
+  --status-stuck-dot: 255 95 18;
+
+  /* Status: Done — warm amber */
+  --status-done: 25 30 5;
+  --status-done-text: 200 155 30;
+  --status-done-dot: 170 125 18;
+
+  /* Priority: Low — faint amber */
+  --priority-low: 20 18 5;
+  --priority-low-text: 120 75 12;
+  --priority-low-dot: 90 55 8;
+
+  /* Priority: Medium — mild amber */
+  --priority-medium: 25 22 5;
+  --priority-medium-text: 160 95 12;
+  --priority-medium-dot: 130 78 10;
+
+  /* Priority: High — strong orange-amber */
+  --priority-high: 40 28 5;
+  --priority-high-text: 255 135 18;
+  --priority-high-dot: 220 115 10;
+
+  /* Priority: Urgent — hot orange */
+  --priority-urgent: 50 20 5;
+  --priority-urgent-text: 255 80 15;
+  --priority-urgent-dot: 255 60 10;
+
+  /* Approved — orange-amber glow */
+  --approved-bg: 30 25 5;
+  --approved-elevated: 40 32 8;
+  --approved-border: 120 90 10;
+  --approved-text: 255 170 35;
+  --approved-glow: 255 147 15;
+
+  /* Completed — warm amber glow */
+  --completed-bg: 25 28 5;
+  --completed-elevated: 35 38 8;
+  --completed-border: 110 80 18;
+  --completed-text: 200 155 30;
+  --completed-glow: 170 125 18;
+}
