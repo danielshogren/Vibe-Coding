@@ -98,7 +98,7 @@ export function MediaLinkButton({
                 setUrlValue(mediaUrl);
                 setIsModalOpen(true);
               }}
-              className="p-0.5 rounded text-ink-faint opacity-0 group-hover/media:opacity-100 hover:text-primary transition-all duration-200"
+              className="p-0.5 rounded-sm text-ink-faint opacity-0 group-hover/media:opacity-100 hover:text-primary transition-all duration-200"
               aria-label="Edit media link"
             >
               <svg
@@ -166,11 +166,11 @@ export function MediaLinkButton({
           }}
         >
           <div
-            className="bg-surface-card rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 border border-edge"
+            className="bg-surface-card rounded shadow-2xl p-8 max-w-sm w-full mx-4 border border-edge"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-primary-light flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded bg-primary-light flex items-center justify-center mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -198,13 +198,13 @@ export function MediaLinkButton({
                 }}
                 placeholder="https://example.com/media"
                 autoFocus
-                className="w-full px-3 py-2 text-sm border border-edge-strong rounded-lg bg-surface-input text-ink focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary mb-6"
+                className="w-full px-3 py-2 text-sm border border-edge-strong rounded-sm bg-surface-input text-ink focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary mb-6"
               />
               <div className="flex gap-3 w-full">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 px-4 py-2 text-sm font-medium text-ink-secondary bg-surface-card border border-edge rounded-lg hover:bg-surface-hover transition-colors duration-200"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-ink-secondary bg-surface-card border border-edge rounded-sm hover:bg-surface-hover transition-colors duration-200"
                 >
                   Cancel
                 </button>
@@ -213,7 +213,7 @@ export function MediaLinkButton({
                     type="button"
                     onClick={handleRemove}
                     disabled={isPending}
-                    className="flex-1 px-4 py-2 text-sm font-medium text-danger-text bg-surface-card border border-danger rounded-lg hover:bg-danger-light disabled:opacity-50 transition-colors duration-200"
+                    className="flex-1 px-4 py-2 text-sm font-medium text-danger-text bg-surface-card border border-danger rounded-sm hover:bg-danger-light disabled:opacity-50 transition-colors duration-200"
                   >
                     {isPending ? "Removing..." : "Remove"}
                   </button>
@@ -222,7 +222,7 @@ export function MediaLinkButton({
                   type="button"
                   onClick={handleSave}
                   disabled={isPending || !urlValue.trim()}
-                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-hover disabled:opacity-50 transition-colors duration-200"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-primary rounded-sm hover:bg-primary-hover disabled:opacity-50 transition-colors duration-200"
                 >
                   {isPending ? "Saving..." : "OK"}
                 </button>
@@ -244,7 +244,7 @@ export function MediaLinkButton({
             }}
           >
             <div
-              className="bg-surface-card rounded-2xl shadow-2xl max-w-3xl w-full mx-4 border border-edge overflow-hidden"
+              className="bg-surface-card rounded shadow-2xl max-w-3xl w-full mx-4 border border-edge overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between px-4 py-3 border-b border-edge">
@@ -252,7 +252,7 @@ export function MediaLinkButton({
                 <button
                   type="button"
                   onClick={() => setIsVideoOpen(false)}
-                  className="shrink-0 p-1 rounded-lg text-ink-faint hover:text-ink hover:bg-surface-hover transition-colors duration-200"
+                  className="shrink-0 p-1 rounded-sm text-ink-faint hover:text-ink hover:bg-surface-hover transition-colors duration-200"
                   aria-label="Close video preview"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">

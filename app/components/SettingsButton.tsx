@@ -22,7 +22,7 @@ export function SettingsButton() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="p-1.5 rounded-md text-ink-faint hover:text-ink-secondary hover:bg-surface-hover transition-colors duration-200"
+        className="p-1.5 rounded-sm text-ink-faint hover:text-ink-secondary hover:bg-surface-hover transition-colors duration-200"
         aria-label="Settings"
       >
         <svg
@@ -52,7 +52,7 @@ export function SettingsButton() {
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="bg-surface-card rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 border border-edge"
+            className="bg-surface-card rounded shadow-2xl p-8 max-w-sm w-full mx-4 border border-edge"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col items-center text-center">
@@ -66,7 +66,7 @@ export function SettingsButton() {
                 <button
                   type="button"
                   onClick={() => setTheme("light")}
-                  className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200 ${
+                  className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-sm border-2 transition-all duration-200 ${
                     theme === "light"
                       ? "border-primary ring-2 ring-primary/30 bg-surface-hover"
                       : "border-edge hover:border-edge-strong bg-surface-card"
@@ -100,7 +100,7 @@ export function SettingsButton() {
                 <button
                   type="button"
                   onClick={() => setTheme("dark")}
-                  className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200 ${
+                  className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-sm border-2 transition-all duration-200 ${
                     theme === "dark"
                       ? "border-primary ring-2 ring-primary/30 bg-surface-hover"
                       : "border-edge hover:border-edge-strong bg-surface-card"
@@ -134,7 +134,7 @@ export function SettingsButton() {
                 <button
                   type="button"
                   onClick={() => setTheme("atomic")}
-                  className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200 ${
+                  className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-sm border-2 transition-all duration-200 ${
                     theme === "atomic"
                       ? "border-primary ring-2 ring-primary/30 bg-surface-hover"
                       : "border-edge hover:border-edge-strong bg-surface-card"
@@ -169,7 +169,7 @@ export function SettingsButton() {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="w-full px-4 py-2 text-sm font-medium text-ink-secondary bg-surface-card border border-edge rounded-lg hover:bg-surface-hover transition-colors duration-200"
+                className="w-full px-4 py-2 text-sm font-medium text-ink-secondary bg-surface-card border border-edge rounded-sm hover:bg-surface-hover transition-colors duration-200"
               >
                 Close
               </button>

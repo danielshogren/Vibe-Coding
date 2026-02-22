@@ -54,12 +54,12 @@ export function Calendar({ itemCountsByDate, selectedDate, onDateSelect, viewYea
   }
 
   return (
-    <div className="bg-surface-card rounded-lg border border-edge shadow-sm p-4">
+    <div className="bg-surface-card rounded-sm border border-edge shadow-sm p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <button
           onClick={prevMonth}
-          className="p-1 rounded hover:bg-surface-hover text-ink-secondary"
+          className="p-1 rounded-sm hover:bg-surface-hover text-ink-secondary"
           aria-label="Previous month"
         >
           &larr;
@@ -69,7 +69,7 @@ export function Calendar({ itemCountsByDate, selectedDate, onDateSelect, viewYea
         </span>
         <button
           onClick={nextMonth}
-          className="p-1 rounded hover:bg-surface-hover text-ink-secondary"
+          className="p-1 rounded-sm hover:bg-surface-hover text-ink-secondary"
           aria-label="Next month"
         >
           &rarr;
@@ -96,7 +96,7 @@ export function Calendar({ itemCountsByDate, selectedDate, onDateSelect, viewYea
           const hasItems = (itemCountsByDate[ds] ?? 0) > 0;
 
           const baseCls = [
-            "relative flex flex-col items-center justify-center py-1 rounded-md",
+            "relative flex flex-col items-center justify-center py-1 rounded-sm",
             isToday && "font-bold ring-2 ring-indicator",
             isSelected && "bg-highlight",
             !isToday && !isSelected && "text-ink",

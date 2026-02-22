@@ -17,11 +17,11 @@ export function ArchivedSection({ items }: { items: ProjectItem[] }) {
   if (items.length === 0) return null;
 
   return (
-    <div className="bg-surface-card rounded-lg border border-edge shadow-sm mt-4">
+    <div className="bg-surface-card rounded-sm border border-edge shadow-sm mt-4">
       {/* Collapsible header */}
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-ink-secondary hover:bg-surface-hover transition-colors rounded-lg"
+        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-ink-secondary hover:bg-surface-hover transition-colors rounded-sm"
       >
         <span className="flex items-center gap-2">
           <svg
@@ -61,14 +61,14 @@ function ArchivedCard({ item }: { item: ProjectItem }) {
   const day = parseInt(item.date.split("-")[2], 10);
 
   return (
-    <div className="bg-surface rounded-md border border-edge px-3 py-2">
+    <div className="bg-surface rounded-sm border border-edge px-3 py-2">
       {/* Row 1: title + restore */}
       <div className="flex items-center justify-between gap-2">
         <span className="text-sm font-medium text-ink-secondary truncate">{item.title}</span>
         <button
           onClick={handleRestore}
           disabled={isPending}
-          className="px-2 py-0.5 text-xs font-medium text-primary bg-surface-card border border-primary/30 rounded hover:bg-primary-light disabled:opacity-50 transition-colors shrink-0"
+          className="px-2 py-0.5 text-xs font-medium text-primary bg-surface-card border border-primary/30 rounded-sm hover:bg-primary-light disabled:opacity-50 transition-colors shrink-0"
         >
           {isPending ? "Restoring..." : "Restore"}
         </button>
@@ -76,7 +76,7 @@ function ArchivedCard({ item }: { item: ProjectItem }) {
       {/* Row 2: status badge + day number */}
       <div className="flex items-center gap-2 mt-1">
         <span
-          className={`text-[11px] px-1.5 py-0.5 rounded-full capitalize ${STATUS_COLORS[item.status]}`}
+          className={`text-[11px] px-1.5 py-0.5 rounded capitalize ${STATUS_COLORS[item.status]}`}
         >
           {item.status.replace("_", " ")}
         </span>

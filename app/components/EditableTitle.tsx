@@ -63,7 +63,7 @@ export function EditableTitle() {
           }
         }}
         onBlur={save}
-        className="text-2xl font-bold text-ink bg-surface-input border border-primary rounded px-1.5 py-0.5 outline-none focus:ring-2 focus:ring-primary"
+        className="text-2xl font-bold text-ink bg-surface-input border border-primary rounded-sm px-1.5 py-0.5 outline-none focus:ring-2 focus:ring-primary"
         autoFocus
       />
     );
@@ -72,7 +72,7 @@ export function EditableTitle() {
   return (
     <span
       onClick={startEditing}
-      className="group inline-flex items-center gap-1 cursor-text rounded px-1.5 py-0.5 transition-colors duration-150 hover:bg-surface-hover"
+      className="group inline-flex items-center gap-1 cursor-text rounded-sm px-1.5 py-0.5 transition-colors duration-150 hover:bg-surface-hover"
     >
       <h1 className="text-2xl font-bold text-ink">{title}</h1>
       <svg

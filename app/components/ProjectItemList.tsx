@@ -151,14 +151,14 @@ function ProjectCard({
   return (
     <section
       ref={cardRef}
-      className={`bg-surface-card rounded-lg border shadow-sm ${borderClass} ${animationClass}`}
+      className={`bg-surface-card rounded-sm border shadow-sm ${borderClass} ${animationClass}`}
       onClick={selectionMode ? () => onToggleSelect?.(item.id) : undefined}
       style={selectionMode ? { cursor: "pointer" } : undefined}
       onAnimationEnd={handleAnimationEnd}
     >
       {/* Header row */}
       <div
-        className={`px-4 py-2 ${headerBgClass} border-b border-edge flex items-center justify-between gap-4 rounded-t-lg`}
+        className={`px-4 py-2 ${headerBgClass} border-b border-edge flex items-center justify-between gap-4 rounded-t-sm`}
       >
         <div className="flex items-center gap-3 flex-1 min-w-0">
           {selectionMode && (
@@ -167,7 +167,7 @@ function ProjectCard({
               checked={isSelected ?? false}
               onChange={() => onToggleSelect?.(item.id)}
               onClick={(e) => e.stopPropagation()}
-              className="w-4 h-4 rounded border-edge-strong text-accent focus:ring-accent shrink-0"
+              className="w-4 h-4 rounded-sm border-edge-strong text-accent focus:ring-accent shrink-0"
             />
           )}
           {!selectionMode && (
@@ -213,7 +213,7 @@ function ProjectCard({
 
       {/* Bottom row — complete + approve toggles */}
       <div
-        className={`px-4 py-1.5 ${bottomBgClass} border-t border-edge flex items-center justify-between rounded-b-lg`}
+        className={`px-4 py-1.5 ${bottomBgClass} border-t border-edge flex items-center justify-between rounded-b-sm`}
       >
         <button
           type="button"
@@ -221,7 +221,7 @@ function ProjectCard({
             e.stopPropagation();
             handleToggleCompleted();
           }}
-          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 ${
+          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-xs font-semibold tracking-wide transition-all duration-200 ${
             isCompleted
               ? "bg-completed-text/15 text-completed-text scale-110"
               : "bg-surface-hover text-ink-muted hover:text-ink-secondary hover:scale-105 active:scale-95"
@@ -245,7 +245,7 @@ function ProjectCard({
             handleToggleApproved();
           }}
           onAnimationEnd={() => setPulsing(false)}
-          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-colors duration-200 ${
+          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-xs font-semibold tracking-wide transition-colors duration-200 ${
             isApproved
               ? "bg-approved-glow/15 text-approved-glow"
               : "bg-surface-hover text-ink-muted hover:text-ink-secondary"

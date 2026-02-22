@@ -9,7 +9,7 @@ export function ProjectItemForm() {
   return (
     <form
       action={createProjectItem}
-      className="flex flex-wrap items-end gap-4 p-4 bg-surface-card rounded-lg border border-edge shadow-sm"
+      className="flex flex-wrap items-end gap-4 p-4 bg-surface-card rounded-sm border border-edge shadow-sm"
     >
       <div className="flex flex-col gap-1">
         <label htmlFor="title" className="text-sm font-medium text-ink-secondary">
@@ -21,7 +21,7 @@ export function ProjectItemForm() {
           type="text"
           required
           placeholder="Project or task name"
-          className="px-3 py-2 border border-edge-strong rounded-md bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary min-w-[200px]"
+          className="px-3 py-2 border border-edge-strong rounded-sm bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary min-w-[200px]"
         />
       </div>
 
@@ -32,7 +32,7 @@ export function ProjectItemForm() {
         <select
           id="status"
           name="status"
-          className="px-3 py-2 border border-edge-strong rounded-md bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary"
+          className="px-3 py-2 border border-edge-strong rounded-sm bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary"
         >
           <option value="backlog">Backlog</option>
           <option value="in_progress">In progress</option>
@@ -49,7 +49,7 @@ export function ProjectItemForm() {
           id="priority"
           name="priority"
           defaultValue="medium"
-          className="px-3 py-2 border border-edge-strong rounded-md bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary"
+          className="px-3 py-2 border border-edge-strong rounded-sm bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary"
         >
           <option value="low">Low</option>
           <option value="medium">Medium</option>
@@ -67,7 +67,7 @@ export function ProjectItemForm() {
           name="notes"
           type="text"
           placeholder="Optional notes"
-          className="px-3 py-2 border border-edge-strong rounded-md bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary min-w-[200px]"
+          className="px-3 py-2 border border-edge-strong rounded-sm bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary min-w-[200px]"
         />
       </div>
 
@@ -79,14 +79,14 @@ export function ProjectItemForm() {
           id="date"
           name="date"
           type="date"
-          className="px-3 py-2 border border-edge-strong rounded-md bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary"
+          className="px-3 py-2 border border-edge-strong rounded-sm bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary"
           defaultValue={new Date().toISOString().slice(0, 10)}
         />
       </div>
 
       <button
         type="submit"
-        className="px-4 py-2 bg-primary text-white font-medium rounded-md hover:bg-primary-hover focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        className="px-4 py-2 bg-primary text-white font-medium rounded-sm hover:bg-primary-hover focus:ring-2 focus:ring-primary focus:ring-offset-2"
       >
         Add item
       </button>

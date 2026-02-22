@@ -24,12 +24,12 @@ export default async function Home() {
       <div className="max-w-5xl mx-auto px-6">
         {/* Sticky header — stays visible while scrolling */}
         <div className="sticky top-0 z-30 bg-surface pt-6 pb-6" data-header>
-          <div className="bg-surface-card rounded-xl shadow-sm border border-edge p-6">
+          <div className="bg-surface-card rounded-sm shadow-sm border border-edge p-6">
             <div className="flex items-center justify-between mb-4">
               <EditableTitle />
               <SettingsButton />
             </div>
-            <div className="bg-surface rounded-lg p-4">
+            <div className="bg-surface rounded-sm p-4">
               <ProjectItemForm />
             </div>
           </div>

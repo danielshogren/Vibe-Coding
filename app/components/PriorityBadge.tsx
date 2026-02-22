@@ -90,14 +90,14 @@ export function PriorityBadge({
         type="button"
         onClick={() => setIsOpen((v) => !v)}
         disabled={isPending}
-        className={`text-sm px-2 py-1 rounded-full capitalize cursor-pointer transition-colors duration-200 flex items-center gap-1 ${PRIORITY_COLORS[currentPriority]} ${isPending ? "opacity-50" : "hover:ring-2 hover:ring-offset-1 hover:ring-edge-strong"}`}
+        className={`text-sm px-2 py-1 rounded capitalize cursor-pointer transition-colors duration-200 flex items-center gap-1 ${PRIORITY_COLORS[currentPriority]} ${isPending ? "opacity-50" : "hover:ring-2 hover:ring-offset-1 hover:ring-edge-strong"}`}
       >
         {currentPriority === "urgent" && <FireIcon className="shrink-0" />}
         {currentPriority}
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full mt-1 z-50 w-36 bg-surface-card rounded-lg border border-edge shadow-lg overflow-hidden">
+        <div className="absolute left-0 top-full mt-1 z-50 w-36 bg-surface-card rounded-sm border border-edge shadow-lg overflow-hidden">
           {PRIORITY_OPTIONS.map((opt) => (
             <button
               key={opt.value}
