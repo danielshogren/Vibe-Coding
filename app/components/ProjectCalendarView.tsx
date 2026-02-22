@@ -179,8 +179,8 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, co
 
         {/* Scrollable project list with fade edges */}
         <div className="relative flex-1 min-h-0">
-          {/* Top fade + blur */}
-          <div className={`absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-surface to-surface/0 backdrop-blur-sm z-10 pointer-events-none rounded-t-lg transition-opacity duration-200 ${canScrollUp ? 'opacity-100' : 'opacity-0'}`} />
+          {/* Top fade */}
+          <div className={`absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-surface to-surface/0 z-10 pointer-events-none rounded-t-lg transition-opacity duration-200 ${canScrollUp ? 'opacity-100' : 'opacity-0'}`} />
 
           {/* Scrollable area */}
           <div ref={scrollRef} className="overflow-y-auto h-full pb-6">
@@ -195,8 +195,8 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, co
             </div>
           </div>
 
-          {/* Bottom fade + blur */}
-          <div className={`absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-surface to-surface/0 backdrop-blur-sm z-10 pointer-events-none rounded-b-lg transition-opacity duration-200 ${canScrollDown ? 'opacity-100' : 'opacity-0'}`} />
+          {/* Bottom fade */}
+          <div className={`absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-surface to-surface/0 z-10 pointer-events-none rounded-b-lg transition-opacity duration-200 ${canScrollDown ? 'opacity-100' : 'opacity-0'}`} />
         </div>
       </div>
 
