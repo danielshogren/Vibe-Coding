@@ -170,10 +170,10 @@ export function uncompleteProjectItem(id: string): void {
   }
 }
 
-/** Return only completed (non-archived) items, sorted by date then title. */
+/** Return all completed items (including archived), sorted by date then title. */
 export function getCompletedProjectItems(): ProjectItem[] {
   return items
-    .filter((i) => i.completed && !i.archived)
+    .filter((i) => i.completed)
     .sort((a, b) => {
       const dateCompare = a.date.localeCompare(b.date);
       if (dateCompare !== 0) return dateCompare;
