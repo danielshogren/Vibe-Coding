@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { createProjectItem } from "@/app/actions";
 
 interface ProjectItemFormProps {
@@ -13,15 +14,26 @@ interface ProjectItemFormProps {
  * Fields: title (text), status (select), date (date picker).
  */
 export function ProjectItemForm({ formDate }: ProjectItemFormProps) {
-  const [dateValue, setDateValue] = useState(formDate ?? new Date().toISOString().slice(0, 10));
+  const dateRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
-    if (formDate) setDateValue(formDate);
+    if (dateRef.current && formDate) {
+      dateRef.current.value = formDate;
+    }
   }, [formDate]);
+
+  async function handleSubmit(formData: FormData) {
+    await createProjectItem(formData);
+    router.refresh();
+    formRef.current?.reset();
+  }
 
   return (
     <form
-      action={createProjectItem}
+      ref={formRef}
+      action={handleSubmit}
       className="flex flex-wrap items-end gap-4 p-4 bg-surface-card rounded-sm border border-edge shadow-sm"
     >
       <div className="flex flex-col gap-1">
@@ -89,12 +101,12 @@ export function ProjectItemForm({ formDate }: ProjectItemFormProps) {
           Due Date
         </label>
         <input
+          ref={dateRef}
           id="date"
           name="date"
           type="date"
+          defaultValue={formDate ?? new Date().toISOString().slice(0, 10)}
           className="px-3 py-2 border border-edge-strong rounded-sm bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary"
-          value={dateValue}
-          onChange={(e) => setDateValue(e.target.value)}
         />
       </div>
 
