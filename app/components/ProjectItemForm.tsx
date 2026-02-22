@@ -1,11 +1,24 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { createProjectItem } from "@/app/actions";
+
+interface ProjectItemFormProps {
+  formDate?: string;
+}
 
 /**
  * Form to create a new project item.
  * Uses a server action for submit; no client-side JS required for basic submit.
  * Fields: title (text), status (select), date (date picker).
  */
-export function ProjectItemForm() {
+export function ProjectItemForm({ formDate }: ProjectItemFormProps) {
+  const [dateValue, setDateValue] = useState(formDate ?? new Date().toISOString().slice(0, 10));
+
+  useEffect(() => {
+    if (formDate) setDateValue(formDate);
+  }, [formDate]);
+
   return (
     <form
       action={createProjectItem}
@@ -80,7 +93,8 @@ export function ProjectItemForm() {
           name="date"
           type="date"
           className="px-3 py-2 border border-edge-strong rounded-sm bg-surface-input text-ink focus:ring-2 focus:ring-primary focus:border-primary"
-          defaultValue={new Date().toISOString().slice(0, 10)}
+          value={dateValue}
+          onChange={(e) => setDateValue(e.target.value)}
         />
       </div>
 

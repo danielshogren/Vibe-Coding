@@ -94,12 +94,14 @@ export function Calendar({ itemCountsByDate, selectedDate, onDateSelect, viewYea
           const isToday = ds === todayStr;
           const isSelected = ds === selectedDate;
           const hasItems = (itemCountsByDate[ds] ?? 0) > 0;
+          const isPast = ds < todayStr;
 
           const baseCls = [
             "relative flex flex-col items-center justify-center py-1 rounded-sm",
             isToday && "font-bold ring-2 ring-indicator",
             isSelected && "bg-highlight",
             !isToday && !isSelected && "text-ink",
+            isPast && "opacity-40",
           ]
             .filter(Boolean)
             .join(" ");
@@ -119,9 +121,14 @@ export function Calendar({ itemCountsByDate, selectedDate, onDateSelect, viewYea
           }
 
           return (
-            <div key={day} className={baseCls}>
+            <button
+              key={day}
+              type="button"
+              onClick={() => onDateSelect(ds)}
+              className={`${baseCls} cursor-pointer hover:bg-highlight-subtle`}
+            >
               {day}
-            </div>
+            </button>
           );
         })}
       </div>

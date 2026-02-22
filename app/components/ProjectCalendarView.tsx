@@ -13,9 +13,10 @@ interface ProjectCalendarViewProps {
   itemCountsByDate: Record<string, number>;
   archivedItems: ProjectItem[];
   completedItems: ProjectItem[];
+  onFutureDateSelect?: (date: string) => void;
 }
 
-export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, completedItems }: ProjectCalendarViewProps) {
+export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, completedItems, onFutureDateSelect }: ProjectCalendarViewProps) {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -87,6 +88,10 @@ export function ProjectCalendarView({ items, itemCountsByDate, archivedItems, co
 
   function handleDateSelect(date: string) {
     setSelectedDate((prev) => (prev === date ? null : date));
+    const todayStr = new Date().toISOString().slice(0, 10);
+    if (date >= todayStr) {
+      onFutureDateSelect?.(date);
+    }
   }
 
   function handleToggleSelect(id: string) {
