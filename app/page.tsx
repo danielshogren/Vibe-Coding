@@ -2,6 +2,7 @@ import { getActiveProjectItems, getArchivedProjectItems, getCompletedProjectItem
 import { ProjectItemForm } from "@/app/components/ProjectItemForm";
 import { ProjectCalendarView } from "@/app/components/ProjectCalendarView";
 import { SettingsButton } from "@/app/components/SettingsButton";
+import { EditableTitle } from "@/app/components/EditableTitle";
 
 /**
  * Single-page MVP: form at top, list of project items grouped by date below,
@@ -23,7 +24,7 @@ export default async function Home() {
       {/* Sticky header: frosted glass + shadow */}
       <div className="sticky top-0 z-10 bg-surface/80 backdrop-blur-md shadow-md px-6 pt-6 pb-4">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-bold text-ink">Project Tracker</h1>
+          <EditableTitle />
           <SettingsButton />
         </div>
         <ProjectItemForm />
