@@ -1,11 +1,14 @@
-import type { ProjectItem } from "./types";
+import type { ProjectItem, FileAttachment } from "./types";
 
 /**
  * In-memory store for project items.
  * Data persists only for the lifetime of the Node process (lost on server restart).
  * No persistence layer yet — this is intentional for the MVP.
  */
-const items: ProjectItem[] = [];
+declare global {
+  var __projectItems: ProjectItem[] | undefined;
+}
+const items: ProjectItem[] = globalThis.__projectItems ?? (globalThis.__projectItems = []);
 
 /** Generate a simple unique id for new items. */
 function generateId(): string {
@@ -16,12 +19,12 @@ function generateId(): string {
  * Add a new project item to the store.
  * Returns the created item (with id set).
  */
-export function addProjectItem(input: Omit<ProjectItem, "id" | "archived" | "fileUrl" | "mediaUrl" | "approved" | "completed">): ProjectItem {
+export function addProjectItem(input: Omit<ProjectItem, "id" | "archived" | "files" | "mediaUrl" | "approved" | "completed">): ProjectItem {
   const item: ProjectItem = {
     ...input,
     id: generateId(),
     archived: false,
-    fileUrl: "",
+    files: [],
     mediaUrl: "",
     approved: false,
     completed: false,
@@ -68,13 +71,51 @@ export function updateProjectItemStatus(
  */
 export function updateProjectItemField(
   id: string,
-  field: "title" | "notes" | "fileUrl" | "mediaUrl",
+  field: "title" | "notes" | "mediaUrl",
   value: string
 ): ProjectItem | null {
   const item = items.find((i) => i.id === id);
   if (!item) return null;
   item[field] = value;
   return item;
+}
+
+/** Add a new file attachment to a project item. */
+export function addFileAttachment(itemId: string, url: string): FileAttachment | null {
+  const item = items.find((i) => i.id === itemId);
+  if (!item) return null;
+  const file: FileAttachment = {
+    id: `file-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+    url,
+    notes: "",
+  };
+  item.files.push(file);
+  return file;
+}
+
+/** Update a single field of a file attachment. */
+export function updateFileAttachment(
+  itemId: string,
+  fileId: string,
+  field: "url" | "notes",
+  value: string
+): FileAttachment | null {
+  const item = items.find((i) => i.id === itemId);
+  if (!item) return null;
+  const file = item.files.find((f) => f.id === fileId);
+  if (!file) return null;
+  file[field] = value;
+  return file;
+}
+
+/** Remove a file attachment from a project item. */
+export function removeFileAttachment(itemId: string, fileId: string): boolean {
+  const item = items.find((i) => i.id === itemId);
+  if (!item) return false;
+  const index = item.files.findIndex((f) => f.id === fileId);
+  if (index === -1) return false;
+  item.files.splice(index, 1);
+  return true;
 }
 
 /**
