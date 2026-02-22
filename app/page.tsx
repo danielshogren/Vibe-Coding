@@ -20,18 +20,20 @@ export default async function Home() {
   }
 
   return (
-    <main className="max-w-5xl mx-auto">
-      {/* Sticky header: frosted glass + shadow */}
-      <div className="sticky top-0 z-10 bg-surface/80 backdrop-blur-md shadow-md px-6 pt-6 pb-4">
+    <main className="max-w-5xl mx-auto px-6 pt-6">
+      {/* Header card */}
+      <div className="bg-surface-card rounded-xl shadow-sm border border-edge p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
           <EditableTitle />
           <SettingsButton />
         </div>
-        <ProjectItemForm />
+        <div className="bg-surface rounded-lg p-4">
+          <ProjectItemForm />
+        </div>
       </div>
 
-      {/* Scrollable content below */}
-      <div className="px-6 pb-6 pt-6">
+      {/* Content */}
+      <div className="pb-6">
         <ProjectCalendarView items={activeItems} itemCountsByDate={itemCountsByDate} archivedItems={archivedItems} completedItems={completedItems} />
       </div>
     </main>
