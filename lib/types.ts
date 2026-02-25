@@ -10,6 +10,15 @@ export type ProjectItemStatus = "backlog" | "in_progress" | "stuck" | "done";
 export type ProjectItemPriority = "low" | "medium" | "high" | "urgent";
 
 /**
+ * A single file attachment on a project item.
+ */
+export interface FileAttachment {
+  id: string;
+  url: string;
+  notes: string;
+}
+
+/**
  * Single project item in our data model.
  * id: unique identifier (generated when created)
  * title: user-facing name
@@ -24,7 +33,7 @@ export interface ProjectItem {
   priority: ProjectItemPriority;
   date: string;
   archived: boolean;
-  fileUrl: string;
+  files: FileAttachment[];
   mediaUrl: string;
   approved: boolean;
   completed: boolean;

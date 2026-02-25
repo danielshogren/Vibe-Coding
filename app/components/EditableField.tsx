@@ -12,6 +12,7 @@ export function EditableField({
   placeholder,
   className,
   emptyClassName,
+  onSave,
 }: {
   itemId: string;
   field: "title" | "notes";
@@ -21,6 +22,7 @@ export function EditableField({
   placeholder?: string;
   className: string;
   emptyClassName?: string;
+  onSave?: (value: string) => void;
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value);
@@ -47,9 +49,13 @@ export function EditableField({
     }
     setIsEditing(false);
     if (trimmed === value) return;
-    startTransition(() => {
-      updateProjectItemField(itemId, field, trimmed);
-    });
+    if (onSave) {
+      onSave(trimmed);
+    } else {
+      startTransition(() => {
+        updateProjectItemField(itemId, field, trimmed);
+      });
+    }
   }
 
   function cancel() {

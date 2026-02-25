@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { addProjectItem, updateProjectItemStatus as storeUpdateStatus, updateProjectItemPriority as storeUpdatePriority, updateProjectItemField as storeUpdateField, deleteProjectItem as storeDeleteItem, deleteProjectItems as storeDeleteItems, archiveProjectItems as storeArchiveItems, unarchiveProjectItem as storeUnarchiveItem, toggleProjectItemApproved as storeToggleApproved, toggleProjectItemCompleted as storeToggleCompleted, uncompleteProjectItem as storeUncomplete } from "@/lib/store";
+import { addProjectItem, updateProjectItemStatus as storeUpdateStatus, updateProjectItemPriority as storeUpdatePriority, updateProjectItemField as storeUpdateField, deleteProjectItem as storeDeleteItem, deleteProjectItems as storeDeleteItems, archiveProjectItems as storeArchiveItems, unarchiveProjectItem as storeUnarchiveItem, toggleProjectItemApproved as storeToggleApproved, toggleProjectItemCompleted as storeToggleCompleted, uncompleteProjectItem as storeUncomplete, addFileAttachment as storeAddFile, updateFileAttachment as storeUpdateFile, removeFileAttachment as storeRemoveFile } from "@/lib/store";
 import type { ProjectItemStatus, ProjectItemPriority } from "@/lib/types";
 
 /**
@@ -49,7 +49,7 @@ export async function updateProjectItemPriority(id: string, priority: ProjectIte
  */
 export async function updateProjectItemField(
   id: string,
-  field: "title" | "notes" | "fileUrl" | "mediaUrl",
+  field: "title" | "notes" | "mediaUrl",
   value: string
 ) {
   storeUpdateField(id, field, value);
@@ -109,5 +109,34 @@ export async function toggleProjectItemCompleted(id: string) {
  */
 export async function uncompleteProjectItem(id: string) {
   storeUncomplete(id);
+  revalidatePath("/");
+}
+
+/**
+ * Server action: adds a file attachment to a project item.
+ */
+export async function addFileToProjectItem(itemId: string, url: string) {
+  storeAddFile(itemId, url);
+  revalidatePath("/");
+}
+
+/**
+ * Server action: updates a field on a file attachment.
+ */
+export async function updateFileAttachment(
+  itemId: string,
+  fileId: string,
+  field: "url" | "notes",
+  value: string
+) {
+  storeUpdateFile(itemId, fileId, field, value);
+  revalidatePath("/");
+}
+
+/**
+ * Server action: removes a file attachment from a project item.
+ */
+export async function removeFileAttachment(itemId: string, fileId: string) {
+  storeRemoveFile(itemId, fileId);
   revalidatePath("/");
 }

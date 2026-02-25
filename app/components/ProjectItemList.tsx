@@ -6,7 +6,7 @@ import { StatusBadge } from "./StatusBadge";
 import { PriorityBadge } from "./PriorityBadge";
 import { DeleteButton } from "./DeleteButton";
 import { EditableField } from "./EditableField";
-import { FileLinkButton } from "./FileLinkButton";
+import { AddFileButton, FileAttachmentList } from "./FileAttachmentList";
 import { MediaLinkButton } from "./MediaLinkButton";
 import { toggleProjectItemApproved, toggleProjectItemCompleted } from "@/app/actions";
 import { playCompleteSound, playApprovedSound } from "@/app/utils/completeSound";
@@ -156,60 +156,81 @@ function ProjectCard({
       style={selectionMode ? { cursor: "pointer" } : undefined}
       onAnimationEnd={handleAnimationEnd}
     >
-      {/* Header row */}
-      <div
-        className={`px-4 py-2 ${headerBgClass} border-b border-edge flex items-center justify-between gap-4 rounded-t-sm`}
-      >
-        <div className="flex items-center gap-3 flex-1 min-w-0">
-          {selectionMode && (
-            <input
-              type="checkbox"
-              checked={isSelected ?? false}
-              onChange={() => onToggleSelect?.(item.id)}
-              onClick={(e) => e.stopPropagation()}
-              className="w-4 h-4 rounded-sm border-edge-strong text-accent focus:ring-accent shrink-0"
+      {/* Main area: left content + right action column */}
+      <div className="flex">
+        {/* Left: header + body stacked */}
+        <div className="flex-1 min-w-0">
+          {/* Header row (priority + title only) */}
+          <div
+            className={`px-4 py-2 ${headerBgClass} border-b border-edge flex items-center gap-4 rounded-tl-sm`}
+          >
+            {selectionMode && (
+              <input
+                type="checkbox"
+                checked={isSelected ?? false}
+                onChange={() => onToggleSelect?.(item.id)}
+                onClick={(e) => e.stopPropagation()}
+                className="w-4 h-4 rounded-sm border-edge-strong text-accent focus:ring-accent shrink-0"
+              />
+            )}
+            {!selectionMode && (
+              <PriorityBadge itemId={item.id} currentPriority={item.priority} />
+            )}
+            <EditableField
+              itemId={item.id}
+              field="title"
+              value={item.title}
+              allowEmpty={false}
+              isHighlighted={isHighlighted}
+              className={isHighlighted ? "font-semibold text-highlight-text" : "font-semibold text-ink-secondary"}
             />
-          )}
-          {!selectionMode && (
-            <PriorityBadge itemId={item.id} currentPriority={item.priority} />
-          )}
-          <EditableField
-            itemId={item.id}
-            field="title"
-            value={item.title}
-            allowEmpty={false}
-            isHighlighted={isHighlighted}
-            className={isHighlighted ? "font-semibold text-highlight-text" : "font-semibold text-ink-secondary"}
-          />
-        </div>
-        {!selectionMode && (
-          <div className="flex items-center gap-1 shrink-0">
-            <StatusBadge itemId={item.id} currentStatus={item.status} />
-            <DeleteButton itemId={item.id} />
           </div>
-        )}
+
+          {/* Body row (due date + notes only) */}
+          <div
+            className={`px-4 py-3 flex items-center gap-4 ${bodyBgClass} transition-colors duration-200`}
+          >
+            <span className={isHighlighted ? "text-sm text-highlight-text shrink-0" : "text-sm text-ink-muted shrink-0"}>
+              Due: {item.date}
+            </span>
+            <EditableField
+              itemId={item.id}
+              field="notes"
+              value={item.notes}
+              allowEmpty={true}
+              isHighlighted={isHighlighted}
+              placeholder="Add notes..."
+              className={isHighlighted ? "text-sm text-highlight-muted" : "text-sm text-ink-faint"}
+              emptyClassName={isHighlighted ? "text-sm text-highlight-muted italic" : "text-sm text-ink-faint italic"}
+            />
+          </div>
+        </div>
+
+        {/* Right column: two zones matching left column's header/body backgrounds */}
+        <div className="flex flex-col shrink-0">
+          {/* Top zone: Status + Trash — header background, no left border */}
+          {!selectionMode && (
+            <div className={`flex items-center justify-end gap-1 px-3 py-2 ${headerBgClass} border-b border-edge rounded-tr-sm`}>
+              <StatusBadge itemId={item.id} currentStatus={item.status} />
+              <DeleteButton itemId={item.id} />
+            </div>
+          )}
+          {/* Bottom zone: FILES + Review side by side — body background, with left border */}
+          <div className={`flex items-center gap-2 px-3 flex-1 border-l border-edge ${bodyBgClass} transition-colors duration-200`}>
+            <AddFileButton itemId={item.id} fileCount={item.files?.length ?? 0} />
+            <MediaLinkButton itemId={item.id} mediaUrl={item.mediaUrl ?? ""} />
+          </div>
+        </div>
       </div>
 
-      {/* Body row */}
-      <div
-        className={`px-4 py-3 flex items-center gap-4 ${bodyBgClass} transition-colors duration-200`}
-      >
-        <span className={isHighlighted ? "text-sm text-highlight-text shrink-0" : "text-sm text-ink-muted shrink-0"}>
-          Due: {item.date}
-        </span>
-        <EditableField
-          itemId={item.id}
-          field="notes"
-          value={item.notes}
-          allowEmpty={true}
-          isHighlighted={isHighlighted}
-          placeholder="Add notes..."
-          className={isHighlighted ? "text-sm text-highlight-muted" : "text-sm text-ink-faint"}
-          emptyClassName={isHighlighted ? "text-sm text-highlight-muted italic" : "text-sm text-ink-faint italic"}
-        />
-        <FileLinkButton itemId={item.id} fileUrl={item.fileUrl ?? ""} />
-        <MediaLinkButton itemId={item.id} mediaUrl={item.mediaUrl ?? ""} />
-      </div>
+      {/* File attachments */}
+      <FileAttachmentList
+        itemId={item.id}
+        files={item.files ?? []}
+        isHighlighted={isHighlighted}
+        isCompleted={isCompleted}
+        bodyBgClass={bodyBgClass}
+      />
 
       {/* Bottom row — complete + approve toggles */}
       <div
